@@ -1,0 +1,15 @@
+{
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.formatting.provider": "yapf",
+    "python.formatting.yapfArgs": [
+        "--style",
+        "{based_on_style: google, column_limit: 120}"
+    ],
+    "python.linting.enabled": true,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true
+    }
+}

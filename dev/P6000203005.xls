@@ -1,0 +1,179 @@
+<!doctype html><html><style> table {border:solid 1px #fab; width:100px; word-wrap:break-word; } td {mso-number-format:"\@"; }.text { mso-number-format:"\@"; }</style><table id="ibom_table" style="width:100%;" border="2" cellspacing="1" cellpadding="1" hspace="1" vspace="1">
+<tbody><tr align="center" bgcolor="#ffcc66">
+<th colspan="24"><font size="+1">P6000203005 Details - <font size="-1">Thu Aug 17 07:11:41 UTC 2023</font></font><font name="dt" id="dt">&nbsp;</font>
+<!--:no_buttons:-->
+&nbsp;&nbsp;&nbsp;
+<button id="ss_button" onclick="xls();"/button>
+&nbsp;&nbsp;&nbsp;
+<!--:pdf_pkg_button:-->
+<button name="pdf_pkg_button" onclick="pdf_pkg_controls_view();" title="Click to show PDF package controls"/button>
+<!--:pdf_pkg_button:-->
+<!--:pdf_pkg_button:-->
+<!--:no_buttons:-->
+</th>
+</tr>
+<tr align="center" bgcolor="#f5deb3">
+<td align="center" width="1px" valign="center" classs="pdf_pkg_noshow" id="pdf_pkg_controls"  ="" style="vertical-align:middle; visibility:hidden; display:none;">
+
+
+
+
+</td>
+<script>pdf_pkg_tds["pdf_pkg_controls"]="pdf_pkg_controls";</script>
+<!--:pdf_pkg_controls:-->
+<td><b>Level</b></td>
+<td  =""><b>Part</b></td>
+<td width="1%"><b>Part Rev</b></td>
+<td><b>Part Status</b></td>
+<td><b>ECN</b></td>
+<td><b>Approval Date</b></td>
+<td><b>Part Description</b></td>
+<td><b>Model</b></td>
+<td><b>Model Rev</b></td>
+<td><b>Quality
+Requirements</b></td>
+<td><b>Quality
+Sections</b></td>
+<td><b>Quality
+Specs</b></td>
+<td><b>Engineering
+Specs</b></td>
+<td><b>Welding</b></td>
+<td><b>Layouts</b></td>
+<td><b>Documents</b></td>
+<td><b>DRL Documents</b></td>
+<td><b>Reports</b></td>
+<td><b>Sequence</b></td>
+<td><b>BOM&nbsp;Lvl Item&nbsp;#</b></td>
+<td><b>Qty</b></td>
+<td><b>UOM</b></td>
+<td  =""><b>Weight</b> LBS(KGS)</td>
+<td  =""><b>Misc. Notes</b></td>
+</tr>
+<!--part_rev=A-->
+<!--part/rev:P6000203005|A:part/rev-->
+<!--part_begin>P6000203005<-->
+<!--part_rev=A-->
+<!--noccr>P6000203005:</noccr-->
+<!--part_desc--2XPT&#047;TT,&nbsp;0&#045;690&#040;10K&#041;&nbsp;BAR&#040;PSI&#041;&nbsp;+&#047;&#045;&nbsp;0.025 PERCENT FS, &#040;&#045;40&#041; TO 150 DEG C +&#047;&#045; 0.3 PERCENT CR, BX&#045;152, 2 1&#047;16&#045;10KSI 8 BOLT, 200 MM, CANOPEN CIA443 V3&#045;FT&#045;BLACK CHANNEL, SIL3, 90 DEGREE HOSE EXIT--part_desc-->
+<!--:sections:P6000203005:1QM4181: 8.5.1 11.2.13C 11.2.16C 11.2.1C:-->
+<tr align="left" valign="top">
+<form name="pdf_pkg_form" id="pdf_pkg_form" target="_blank" action="/FTI_data/pdf_pkg/P6000203005_pkg.pdf" method="post" enctype="multipart/form-data"></form>
+<td align="center" width="1px" valign="center" classs="pdf_pkg_noshow" id="pdf_pkg_td_1"  ="" style="vertical-align:middle; visibility:hidden; display:none;">
+
+</td>
+<script>pdf_pkg_tds["pdf_pkg_td_1"]="pdf_pkg_td_1";pdf_pkg_checkboxes["pdf_pkg_checkbox_1"]="pdf_pkg_checkbox_1";</script>
+<!--:pdf_pkg_td:P6000203005:DU600251338:-->
+<td  ="" align="center" bgcolor="ivory">
+1
+<!--level=1><-->
+</td>
+<!--:pdf_pkg_part:P6000203005:-->
+<td  ="" bgcolor="beige">
+<a hreff="part=&quot;P6000203005&quot;" target="_blank">P6000203005</a>
+</td>
+<td width="1%"  ="" align="center" bgcolor="ivory">
+A
+</td>
+<td  ="" align="center" bgcolor="beige">
+RELEASED
+</td>
+<td  ="" align="center" bgcolor="ivory">
+<a hreff="ecn=&quot;6295409&quot;" target="_blank">6295409</a>
+</td>
+<td  ="" bgcolor="beige">
+19-JUN-2023
+</td>
+<td bgcolor="ivory">
+2XPT/TT,&nbsp;0-690(10K)&nbsp;BAR(PSI)&nbsp;+/-&nbsp;0.025 PERCENT FS, (-40) TO 150 DEG C +/- 0.3 PERCENT CR, BX-152, 2 1/16-10KSI 8 BOLT, 200 MM, CANOPEN CIA443 V3-FT-BLACK CHANNEL, SIL3, 90 DEGREE HOSE EXIT
+<!--part_desc--2XPT/TT,&nbsp;0&#045;690&#040;10K&#041;&nbsp;BAR&#040;PSI&#041;&nbsp;+/&#045;&nbsp;0.025 PERCENT FS, &#040;&#045;40&#041; TO 150 DEG C +/&#045; 0.3 PERCENT CR, BX&#045;152, 2 1/16&#045;10KSI 8 BOLT, 200 MM, CANOPEN CIA443 V3&#045;FT&#045;BLACK CHANNEL, SIL3, 90 DEGREE HOSE EXIT--part_desc-->
+</td>
+<!--:pdf_pkg_model:DU600251338:-->
+<td  ="" align="left" bgcolor="beige">
+<a hreff="model=&quot;DU600251338&quot;" target="_blank">DU600251338</a></td>
+<td  ="" align="center" bgcolor="ivory">
+B
+</td>
+<td  ="" align="left" bgcolor="beige">
+<a hreff="qm=&quot;1QM4181&quot;" target="_blank">1QM4181</a>
+</td>
+<td  ="" align="left" bgcolor="ivory">
+8.5.1 11.2.13C 11.2.16C 11.2.1C
+</td>
+<td  ="" align="left" bgcolor="beige">
+<a hreff="spec=&quot;Q15002&quot;" target="_blank">Q15002</a>/A
+ 
+<a hreff="spec=&quot;Q00409&quot;" target="_blank">Q00409</a>/B
+ 
+<a hreff="spec=&quot;Q00267&quot;" target="_blank">Q00267</a>/D
+ 
+<a hreff="spec=&quot;Q00403&quot;" target="_blank">Q00403</a>/AE
+ 
+<a hreff="spec=&quot;Q03401&quot;" target="_blank">Q03401</a>/P
+ 
+<a hreff="spec=&quot;Q00303&quot;" target="_blank">Q00303</a>/L
+ 
+<a hreff="spec=&quot;Q00167&quot;" target="_blank">Q00167</a>/K
+ 
+<a hreff="spec=&quot;Q00393&quot;" target="_blank">Q00393</a>/I
+</td>
+<td width="5%"  ="" bgcolor="ivory" valign="top">
+&nbsp;&nbsp;&nbsp;&nbsp;
+<!--NO_DATA:P6000203005:1:especs-->
+</td>
+<td width="5%"  ="" bgcolor="beige" valign="top">
+&nbsp;&nbsp;&nbsp;&nbsp;
+<!--NO_DATA:P6000203005:1:weld-->
+</td>
+<td width="5%"  ="" bgcolor="ivory" valign="top">
+&nbsp;&nbsp;&nbsp;&nbsp;
+<!--NO_DATA:P6000203005:1:layouts-->
+</td>
+<td  ="" bgcolor="beige">
+<a hreff="item=&quot;NOI40037995&quot;" target="_blank">NOI40037995</a>/D
+ 
+<a hreff="item=&quot;SPC60190651&quot;" target="_blank">SPC60190651</a>/A
+ 
+<a hreff="item=&quot;LST10086668&quot;" target="_blank">LST10086668</a>/H
+ 
+<a hreff="item=&quot;MCR60087649&quot;" target="_blank">MCR60087649</a>/C
+ 
+<a hreff="item=&quot;SPC60121840&quot;" target="_blank">SPC60121840</a>/C
+ 
+<a hreff="item=&quot;LST60103755&quot;" target="_blank">LST60103755</a>/F
+ 
+<a hreff="item=&quot;TST60107054&quot;" target="_blank">TST60107054</a>/B
+ 
+<a hreff="item=&quot;SUP60151836&quot;" target="_blank">SUP60151836</a>/E
+ 
+<a hreff="item=&quot;SUP60151837&quot;" target="_blank">SUP60151837</a>/F
+</td>
+<td  ="" bgcolor="ivory">
+&nbsp;
+</td>
+<td width="5%"  ="" bgcolor="beige" valign="top">
+&nbsp;&nbsp;&nbsp;&nbsp;
+<!--NO_DATA:P6000203005:1:reports-->
+</td>
+<td width="5%"  ="" bgcolor="ivory" valign="top">
+&nbsp;&nbsp;&nbsp;&nbsp;
+<!--NO_DATA:P6000203005:1:sqn-->
+</td>
+<td width="5%"  ="" bgcolor="beige" valign="top">
+&nbsp;&nbsp;&nbsp;&nbsp;
+<!--NO_DATA:P6000203005:1:itemn-->
+</td>
+<td  ="" align="center" bgcolor="ivory">
+1
+</td>
+<td  ="" align="center" bgcolor="beige">
+EA
+</td>
+<td  ="" align="center" bgcolor="ivory">
+40 (18)
+</td>
+<td  ="" align="left" bgcolor="beige"><pre>NOTE 1          AS STANDARD WEPS-100 SERIES SENSORS ARE DELIVERED WITH 90DEGREE EXIT FOR THE HARNESS ADAPTER. IF STRAIGHT ADAPTER IS NECESSARY, ADD PN P6000182268 TO SENSOR HARNESS BOM.</pre></td>
+</tr>
+<!--part_end>P6000203005<-->
+
+</tbody></table></html>
