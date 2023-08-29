@@ -16,6 +16,8 @@ class firebaseUserPortfolio:
         self.user_portfolio_name = user_portfolio_name
         self.user_portfolio = self.get_portfolio()
         self.holdings = self.get_portfolio_holdings_df() # A dataframe with the portfolio holdings
+        self.accounts = self.get_portfolio_accounts() # A list with the portfolio accounts
+        self.categories = self.get_portfolio_categories() # A list with the portfolio categories|
     
 
     def get_portfolio_holdings_df(self) -> pd.DataFrame | None:
@@ -26,6 +28,22 @@ class firebaseUserPortfolio:
                 return df
             except:
                 return None
+            
+    def get_portfolio_accounts(self) -> list | None:
+        if self.user_portfolio is not None:
+            try:
+                accounts = self.user_portfolio['accounts']
+                return accounts
+            except:
+                return []
+            
+    def get_portfolio_categories(self) -> list | None:
+        if self.user_portfolio is not None:
+            try:
+                categories = self.user_portfolio['categories']
+                return categories
+            except:
+                return []
     
     def get_portfolio(self) -> dict | None:
         
@@ -38,7 +56,7 @@ class firebaseUserPortfolio:
     def upload_excel_portfolio(self, new_portfolio: list):
         try:
             doc_ref = db.collection("user_portfolio").document(self.user_portfolio_name)
-            doc_ref.set({'holdings': new_portfolio})
+            doc_ref.update({'holdings': new_portfolio})
             return True
         except:
             return False
@@ -46,10 +64,23 @@ class firebaseUserPortfolio:
     def update_portfolio_holdings(self):
         if self.holdings is not None:
             doc_ref = db.collection("user_portfolio").document(self.user_portfolio_name)
-            print(f'holdings as dict: {self.holdings.to_dict(orient="records")}')
-            doc_ref.set({'holdings': self.holdings.to_dict(orient='records')})
+            doc_ref.update({'holdings': self.holdings.to_dict(orient='records')})
+
+    def update_portfolio_accounts(self):
+        if self.accounts is not None:
+            doc_ref = db.collection("user_portfolio").document(self.user_portfolio_name)
+            doc_ref.update({'accounts': self.accounts})
+
+    def update_portfolio_categories(self):
+        if self.categories is not None:
+            doc_ref = db.collection("user_portfolio").document(self.user_portfolio_name)
+            doc_ref.update({'categories': self.categories})
+
+    
 
 
-
-
-# 
+portfolio = firebaseUserPortfolio('ruben_account')
+portfolio.categories = ['test']
+portfolio.accounts = ['test2', 'test3']
+portfolio.update_portfolio_categories()
+portfolio.update_portfolio_accounts()

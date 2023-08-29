@@ -2,7 +2,7 @@ from subprocess import Popen
 import time
 
 Popen(
-    "streamlit run program\\streamlit\\streamlit_app_portfolio.py --server.headless true --server.baseUrlPath strategy_tester",
+    "streamlit run program\\streamlit\\streamlit_app_portfolio.py --server.headless true --server.baseUrlPath strategy_tester --server.runOnSave false",
     shell=True)
 
 while True:
