@@ -1,5 +1,4 @@
-from program.workers.firebase import firebaseUserPortfolio
-import streamlit as st
+
 
 import os
 import sys
@@ -7,8 +6,13 @@ import pandas as pd
 
 sys.path.insert(1, os.path.abspath('.'))
 
+from program.workers.firebase import firebaseUserPortfolio
+from program.streamlit_functions.manage_portfolio.proxy_etf_list import find_proxy_etf
+import streamlit as st
 
 def streamlit_manage_portfolio():
+
+    
 
     trigger_rerun = False
 
@@ -16,6 +20,11 @@ def streamlit_manage_portfolio():
         "Select portfolio", options=['ruben_account'])
     loaded_portfolio = firebaseUserPortfolio(user_portfolio)
 
+    with st.expander("Manage proxies"):
+        st.info("Proxies are used to predict future results of newer ETF's based on historical results of ETF's with similar characteristics that have existed for X years or more. The older, the better the prediction of correlation in a portfolio.")
+        min_proxy_age = st.slider("Select min age of proxies", min_value=0, max_value=30, value=20)
+        proxies = find_proxy_etf(min_proxy_age)
+        st.dataframe(proxies)
 
     with st.expander("Manage accounts"):
         # Create a streamlit select box to select an account

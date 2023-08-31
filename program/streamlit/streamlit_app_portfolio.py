@@ -8,7 +8,7 @@ sys.path.insert(1, os.path.abspath('.'))
 # import the PortfolioDefiner class from the portfolio module
 
 from program.workers.firebase import firebaseUserPortfolio
-from program.streamlit_functions.streamlit_manage_portfolio import streamlit_manage_portfolio
+from program.streamlit_functions.manage_portfolio.streamlit_manage_portfolio import streamlit_manage_portfolio
 
 st.title('TOTAL PORTFOLIO ANALYSIS')
 

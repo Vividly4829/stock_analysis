@@ -2,6 +2,9 @@ import sys
 import os
 from google.cloud import firestore
 import pandas as pd
+import yfinance as yf
+from datetime import datetime
+import traceback
 
 sys.path.insert(1, os.path.abspath('.'))
 
@@ -20,13 +23,33 @@ class firebaseUserPortfolio:
         self.categories = self.get_portfolio_categories() # A list with the portfolio categories|
     
 
+
+    def get_etf_inception_date_yfinance(self, ticker):
+        
+        try:
+            etf = yf.Ticker(ticker)
+            history = etf.history(period='max')
+            inception_date = history.index[0].date()         
+            return inception_date
+        
+        except:
+            # return the date of today if the inception date could not be found
+            return datetime.today().strftime('%Y-%m-%d')
+        
+
+
     def get_portfolio_holdings_df(self) -> pd.DataFrame | None:
         if self.user_portfolio is not None:
             try:
                 holdings = self.user_portfolio['holdings']
                 df = pd.DataFrame(holdings)
+                df['Inception Date'] = df['Ticker'].apply(lambda x: self.get_etf_inception_date_yfinance(x))
+          
                 return df
+            
             except:
+                tb = traceback.format_exc()
+                print(tb)
                 return None
             
     def get_portfolio_accounts(self) -> list | None:
@@ -80,7 +103,4 @@ class firebaseUserPortfolio:
 
 
 portfolio = firebaseUserPortfolio('ruben_account')
-portfolio.categories = ['test']
-portfolio.accounts = ['test2', 'test3']
-portfolio.update_portfolio_categories()
-portfolio.update_portfolio_accounts()
+print(portfolio.holdings)
