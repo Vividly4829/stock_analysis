@@ -5,15 +5,41 @@ import sys
 
 sys.path.insert(1, os.path.abspath('.'))
 
+st. set_page_config(layout="wide", page_title='Portfolio', page_icon=':moneybag:')
+
 # import the PortfolioDefiner class from the portfolio module
+
 
 from program.workers.firebase import firebaseUserPortfolio
 from program.streamlit_functions.manage_portfolio.streamlit_manage_portfolio import streamlit_manage_portfolio
+from program.streamlit_functions.portfolio_holdings.streamlit_portfolio_holdings import streamlit_portfolio_holdings
+from program.workers.firebase import *
 
-st.title('TOTAL PORTFOLIO ANALYSIS')
 
-manage_portfolio, portfolio_performance, portfolio_analysis = st.tabs(["Manage portfolio", "Performance", "Analysis"])
+user_name = 'user_portfolio'
+portfolios = get_portfolio_names(user_name=user_name)
 
-# crate a streamlit tab called *Manage portfolio*
-with manage_portfolio:
+user_portfolio = st.sidebar.selectbox(
+    "Select portfolio", options=portfolios)
+
+
+if st.sidebar.button('Load portfolio'):
+    with st.spinner('Loading user portfolio...'):
+        st.session_state.loaded_portfolio = firebaseUserPortfolio(user_name, user_portfolio)
+        st.session_state.loaded_portfolio_name = user_portfolio
+        trigger_rerun = True
+st.sidebar.markdown('---')
+    
+
+
+
+selected_tab = st.sidebar.radio(
+    "Menu:",
+    ["Current holdings", "Manage portfolio"]
+)
+
+# Show content based on selected radio button
+if selected_tab == "Current holdings":
+    streamlit_portfolio_holdings()
+elif selected_tab == "Manage portfolio":
     streamlit_manage_portfolio()
