@@ -6,6 +6,7 @@ from program.workers.firebase import *
 import os
 import sys
 import pandas as pd
+import time
 
 sys.path.insert(1, os.path.abspath('.'))
 
@@ -13,7 +14,7 @@ sys.path.insert(1, os.path.abspath('.'))
 def streamlit_manage_portfolio():
 
     trigger_rerun = False
-
+    
     if not 'loaded_portfolio' in st.session_state:
         st.info('No portfolio loaded - load portfolio in side menu.')
   
@@ -70,11 +71,14 @@ def streamlit_manage_portfolio():
         st.write('Update portfolio')
         st.info(
             "Select row and press 'delete' button on the keyboard to delete . Press '+' to add a new row")
-        st.session_state.loaded_portfolio.holdings = st.data_editor(
-            st.session_state.loaded_portfolio.holdings, num_rows="dynamic", column_config=column_config)  # type: ignore
-        if st.button(label="Update portfolio"):
-            st.session_state.loaded_portfolio.update_portfolio_holdings()
-            st.success("Portfolio updated")
+        
+        with st.form(key="Update portfolio"):
+            st.session_state.loaded_portfolio.holdings = st.data_editor(
+                st.session_state.loaded_portfolio.holdings, num_rows="dynamic", column_config=column_config)  # type: ignore
+            
+            if st.form_submit_button(label="Update portfolio"):
+                st.session_state.loaded_portfolio.update_portfolio_holdings()
+                st.success("Portfolio updated")
 
 
         with st.expander("Manage proxies"):
@@ -159,12 +163,16 @@ def streamlit_manage_portfolio():
 
                 new_category = st.text_input("Add new category")
                 if st.button('Add category'):
-                    if category is not None:
-                        if len(new_category) > 0 and new_category not in st.session_state.loaded_portfolio.categories:
+                    if new_category is not None:
+                        if len(new_category) > 1 and new_category not in st.session_state.loaded_portfolio.categories:
                             st.session_state.loaded_portfolio.categories.append(new_category)
                             st.session_state.loaded_portfolio.update_portfolio_categories()
                             st.success(f'Category {new_category} added')
+                            
                             trigger_rerun = True
+                        else:
+                            st.error(f'Category {new_category} was not added because it was too short or already existed.')
+               
 
         with st.expander("Upload portfolio from excel"):
             # Create a streamlit form to upload a portfolio from an excel file

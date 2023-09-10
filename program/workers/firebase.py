@@ -129,6 +129,7 @@ class firebaseUserPortfolio:
             doc_ref.update({'accounts': self.accounts})
 
     def update_portfolio_categories(self):
+        print('categoreies:', self.categories)
         if self.categories is not None:
             doc_ref = db.collection(self.user_name).document(self.user_portfolio_name)
             doc_ref.update({'categories': self.categories})

@@ -3,94 +3,94 @@ import yfinance as yf
 from forex_python.converter import CurrencyRates
 import traceback
 from dataclasses import dataclass
-
-# Read the Excel sheet into a DataFrame
-df = pd.read_excel('formue.xlsx')
+import streamlit as st
 
 # Create a currency converter object
 c = CurrencyRates()
 
 
-def calculate_portfolio_value(dataframe: pd.DataFrame):
-
+def calculate_portfolio_value(df: pd.DataFrame):
+    with st.spinner('Calculating current portfolio value...'):
     # Define a function to calculate the current value in NOK, EUR, and USD
-    def calculate_value(row):
-        ticker = row['Ticker']
-        quantity = row['quantity']
-        currency = row['currency']
-        account = row['account']
-        proxy = row['Proxy']
+        def calculate_value(row):
+            ticker = row['Ticker']
+            quantity = row['Quantity']
+            currency = row['Currency']
+            account = row['Account']
+            proxy = row['Proxy']
 
 
-        ticker = ticker.strip()  # Remove leading/trailing whitespaces
+            ticker = ticker.strip()  # Remove leading/trailing whitespaces
 
 
-        if ticker == 'CASH' or ticker == 'FUND':
-            value = quantity
-        else:
-            try:
-                print(f'Fetching data for {ticker}...')
-                stock = yf.Ticker(ticker)
-                current_price = stock.info['previousClose']
-                value = current_price * quantity
-                currency = stock.info['currency']
-            except:
-                print(f'Failed to fetch data for {ticker}...')
-                value = 0
-                currency = 'NOK'  # Set currency to NOK if data fetching fails
+            if ticker == 'CASH' or ticker == 'FUND':
+                value = quantity
+            else:
+                try:
+                    st.success(f'Fetching data for {ticker}...')
+                    stock = yf.Ticker(ticker)
+                    current_price = stock.info['previousClose']
+                    value = current_price * quantity
+                    currency = stock.info['currency']
+                except:
+                    st.error(f'Failed to fetch data for {ticker}...')
+                    value = 0
+                    currency = 'NOK'  # Set currency to NOK if data fetching fails
 
-        if currency == 'NOK':
-            nok_value = value
-            eur_value = c.convert('NOK', 'EUR', value)
-            usd_value = c.convert('NOK', 'USD', value)
-        elif currency == 'EUR':
-            nok_value = c.convert('EUR', 'NOK', value)
-            eur_value = value
-            usd_value = c.convert('EUR', 'USD', value)
-        elif currency == 'USD':
-            nok_value = c.convert('USD', 'NOK', value)
-            eur_value = c.convert('USD', 'EUR', value)
-            usd_value = value
-        else:
-            nok_value = 0
-            eur_value = 0
-            usd_value = 0
+            if currency == 'NOK':
+                nok_value = value
+                eur_value = c.convert('NOK', 'EUR', value)
+                usd_value = c.convert('NOK', 'USD', value)
+            elif currency == 'EUR':
+                nok_value = c.convert('EUR', 'NOK', value)
+                eur_value = value
+                usd_value = c.convert('EUR', 'USD', value)
+            elif currency == 'USD':
+                nok_value = c.convert('USD', 'NOK', value)
+                eur_value = c.convert('USD', 'EUR', value)
+                usd_value = value
+            else:
+                nok_value = 0
+                eur_value = 0
+                usd_value = 0
 
-        return int(nok_value), int(eur_value), int(usd_value)
+            return int(nok_value), int(eur_value), int(usd_value)
 
-    # Apply the function to calculate the current value for each row
-    df['Value (NOK)'], df['Value (EUR)'], df['Value (USD)'] = zip(*df.apply(calculate_value, axis=1))
+        # Apply the function to calculate the current value for each row
+        df['Value (NOK)'], df['Value (EUR)'], df['Value (USD)'] = zip(*df.apply(calculate_value, axis=1))
 
-    # log the values of the portfolio
-    todays_date = pd.Timestamp.today().strftime('%Y-%m-%d')
-    day_log_df = df[['account', 'Ticker', 'quantity', 'Value (NOK)', 'Value (EUR)', 'Value (USD)']]
-    day_log_df.to_csv(f'{todays_date}.csv', index=False)
+        return df
 
-    # calculate the key values for the portfolio
-    portfolio_summary = {}
+    # # log the values of the portfolio
+    # todays_date = pd.Timestamp.today().strftime('%Y-%m-%d')
+    # day_log_df = df[['account', 'Ticker', 'quantity', 'Value (NOK)', 'Value (EUR)', 'Value (USD)']]
+    # day_log_df.to_csv(f'{todays_date}.csv', index=False)
 
-    portfolio_summary['total_nok_value'] = df['Value (NOK)'].sum()
+    # # calculate the key values for the portfolio
+    # portfolio_summary = {}
 
-    for account in df['account'].unique():
-        account_df = df[df['account'] == account]
-        account_nok_value = account_df['Value (NOK)'].sum()
-        portfolio_summary[account] = account_nok_value
+    # portfolio_summary['total_nok_value'] = df['Value (NOK)'].sum()
+
+    # for account in df['account'].unique():
+    #     account_df = df[df['account'] == account]
+    #     account_nok_value = account_df['Value (NOK)'].sum()
+    #     portfolio_summary[account] = account_nok_value
 
 
-    # Find the total amount of cash
-    cash_df = df[df['Ticker'] == 'CASH']
-    total_cash = cash_df['Value (NOK)'].sum()
+    # # Find the total amount of cash
+    # cash_df = df[df['Ticker'] == 'CASH']
+    # total_cash = cash_df['Value (NOK)'].sum()
 
-    portfolio_summary['total_cash'] = total_cash
+    # portfolio_summary['total_cash'] = total_cash
 
-    # Find the sum of all items that have ticker 'IAU', 'IAUM' or 'GLD
-    gold_df = df[df['Ticker'].isin(['IAU', 'IAUM', 'GLD'])]
-    total_gold = gold_df['Value (NOK)'].sum()
+    # # Find the sum of all items that have ticker 'IAU', 'IAUM' or 'GLD
+    # gold_df = df[df['Ticker'].isin(['IAU', 'IAUM', 'GLD'])]
+    # total_gold = gold_df['Value (NOK)'].sum()
 
-    portfolio_summary['total_gold'] = total_gold
-    portfolio_summary['total_stocks'] = portfolio_summary['total_nok_value'] - total_cash - total_gold
+    # portfolio_summary['total_gold'] = total_gold
+    # portfolio_summary['total_stocks'] = portfolio_summary['total_nok_value'] - total_cash - total_gold
 
-    print(portfolio_summary)
+    # print(portfolio_summary)
 
     # portfolio_visualiser_df = df.groupby(
     #     'Proxy').sum().reset_index()  # Loop through all the accounts and print the total value for each account
