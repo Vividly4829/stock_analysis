@@ -2,7 +2,7 @@
 
 import streamlit as st
 from program.streamlit_functions.manage_portfolio.proxy_etf_list import find_proxy_etf
-from program.workers.firebase import *
+from program.workers.jsonbase import *
 import os
 import sys
 import pandas as pd
@@ -20,6 +20,12 @@ def streamlit_manage_portfolio():
   
     if 'loaded_portfolio_name' in st.session_state:
         
+
+        portfolio_accounts = st.session_state.loaded_portfolio.accounts.copy()
+        # add the option to select all accounts to the first position in the array
+        portfolio_accounts.insert(0, 'All accounts')
+        selected_account = st.selectbox('Select portfolio account', portfolio_accounts) 
+
         st.sidebar.title(
             f'LOADED PORTFOLIO: {st.session_state.loaded_portfolio_name}'.upper())
         st.session_state.loaded_portfolio = st.session_state.loaded_portfolio
@@ -73,10 +79,23 @@ def streamlit_manage_portfolio():
             "Select row and press 'delete' button on the keyboard to delete . Press '+' to add a new row")
         
         with st.form(key="Update portfolio"):
-            st.session_state.loaded_portfolio.holdings = st.data_editor(
-                st.session_state.loaded_portfolio.holdings, num_rows="dynamic", column_config=column_config)  # type: ignore
+            if selected_account != 'All accounts':
+                portfolio_data = st.session_state.loaded_portfolio.holdings[st.session_state.loaded_portfolio.holdings['account'] == selected_account]
+            else: 
+                portfolio_data = st.session_state.loaded_portfolio.holdings
+
+            updated_portfolio_data  = st.data_editor(
+                portfolio_data, num_rows="dynamic", column_config=column_config)  # type: ignore
             
             if st.form_submit_button(label="Update portfolio"):
+                
+                # Replaced the data in the portfolio with the updated data for the selected acount
+                if selected_account != 'All accounts':
+                    st.session_state.loaded_portfolio.holdings.loc[st.session_state.loaded_portfolio.holdings['account'] == selected_account] = updated_portfolio_data
+                else: 
+                    st.session_state.loaded_portfolio.holdings = updated_portfolio_data
+
+
                 st.session_state.loaded_portfolio.update_portfolio_holdings()
                 st.success("Portfolio updated")
 
@@ -195,8 +214,7 @@ def streamlit_manage_portfolio():
                         df = pd.read_excel(excel_file)
                         df_dict = df.to_dict(orient='records')
 
-                        upload_status = st.session_state.loaded_portfolio.upload_excel_portfolio(
-                            df_dict)
+                        upload_status = st.session_state.loaded_portfolio.upload_excel_portfolio(df_dict)
 
                         if upload_status:
                             st.success("Portfolio uploaded")

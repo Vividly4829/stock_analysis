@@ -10,13 +10,13 @@ st. set_page_config(layout="wide", page_title='Portfolio', page_icon=':moneybag:
 # import the PortfolioDefiner class from the portfolio module
 
 
-from program.workers.firebase import firebaseUserPortfolio
+from program.workers.jsonbase import JsonBaseUserPortfolio
 from program.streamlit_functions.manage_portfolio.streamlit_manage_portfolio import streamlit_manage_portfolio
 from program.streamlit_functions.portfolio_holdings.streamlit_portfolio_holdings import streamlit_portfolio_holdings
-from program.workers.firebase import *
+from program.workers.jsonbase import *
 
 
-user_name = 'user_portfolio'
+user_name = 'ruben'
 portfolios = get_portfolio_names(user_name=user_name)
 
 user_portfolio = st.sidebar.selectbox(
@@ -25,13 +25,11 @@ user_portfolio = st.sidebar.selectbox(
 
 if st.sidebar.button('Load portfolio'):
     with st.spinner('Loading user portfolio...'):
-        st.session_state.loaded_portfolio = firebaseUserPortfolio(user_name, user_portfolio)
+        st.session_state.loaded_portfolio = JsonBaseUserPortfolio(user_name, user_portfolio)
         st.session_state.loaded_portfolio_name = user_portfolio
         trigger_rerun = True
 st.sidebar.markdown('---')
     
-
-
 
 selected_tab = st.sidebar.radio(
     "Menu:",
