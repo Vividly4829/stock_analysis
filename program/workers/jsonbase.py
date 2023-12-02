@@ -8,7 +8,6 @@ import traceback
 import json
 import streamlit as st
 
-sys.path.insert(1, os.path.abspath('.'))
 
 data_folder = "data"
 

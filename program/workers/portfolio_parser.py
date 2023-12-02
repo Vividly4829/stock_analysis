@@ -27,7 +27,7 @@ def calculate_portfolio_value(df: pd.DataFrame):
                 value = quantity
             else:
                 try:
-                    st.success(f'Fetching data for {ticker}...')
+                    st.info(f'Fetching data for {ticker}...')
                     stock = yf.Ticker(ticker)
                     current_price = stock.info['previousClose']
                     value = current_price * quantity

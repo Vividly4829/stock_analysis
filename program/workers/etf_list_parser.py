@@ -4,8 +4,6 @@ import pandas as pd
 import yfinance as yf
 from datetime import datetime, timedelta
 
-sys.path.insert(1, os.path.abspath('.'))
-
 # Read the Excel sheet into a DataFrame
 # df = pd.read_excel('files/etf_list/most_traded_etfs.xlsx')
 

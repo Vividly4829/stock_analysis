@@ -8,7 +8,6 @@ import sys
 import pandas as pd
 import time
 
-sys.path.insert(1, os.path.abspath('.'))
 
 
 def streamlit_manage_portfolio():

@@ -3,13 +3,9 @@ import streamlit as st
 import os
 import sys
 
-sys.path.insert(1, os.path.abspath('.'))
-
 st. set_page_config(layout="wide", page_title='Portfolio', page_icon=':moneybag:')
 
 # import the PortfolioDefiner class from the portfolio module
-
-
 from program.workers.jsonbase import JsonBaseUserPortfolio
 from program.streamlit_functions.manage_portfolio.streamlit_manage_portfolio import streamlit_manage_portfolio
 from program.streamlit_functions.portfolio_holdings.streamlit_portfolio_holdings import streamlit_portfolio_holdings
