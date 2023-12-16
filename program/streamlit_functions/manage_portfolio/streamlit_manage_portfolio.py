@@ -1,7 +1,6 @@
-
-
 import streamlit as st
 from program.streamlit_functions.manage_portfolio.proxy_etf_list import find_proxy_etf
+from program.streamlit_functions.manage_portfolio.log_change import log_portfolio_change    
 from program.workers.jsonbase import *
 import os
 import sys
@@ -12,91 +11,45 @@ import time
 
 def streamlit_manage_portfolio():
 
-    trigger_rerun = False
+
+    st.session_state['trigger_rerun'] = False
     
     if not 'loaded_portfolio' in st.session_state:
         st.info('No portfolio loaded - load portfolio in side menu.')
   
-    if 'loaded_portfolio_name' in st.session_state:
+    if 'loaded_portfolio' in st.session_state:
         
-
-        portfolio_accounts = st.session_state.loaded_portfolio.accounts.copy()
-        # add the option to select all accounts to the first position in the array
-        portfolio_accounts.insert(0, 'All accounts')
-        selected_account = st.selectbox('Select portfolio account', portfolio_accounts) 
-
-        st.sidebar.title(
-            f'LOADED PORTFOLIO: {st.session_state.loaded_portfolio_name}'.upper())
-        st.session_state.loaded_portfolio = st.session_state.loaded_portfolio
-
+        
         st.sidebar.write('Options:')
         if st.sidebar.button('Load inception dates:'):
             with st.spinner('Loading inception dates...'):
-                trigger_rerun = True
+                st.session_state['trigger_rerun'] = True
                 st.session_state.loaded_portfolio.load_inception_dates()
+   
+        df = pd.DataFrame(st.session_state.loaded_portfolio.holdings)
+    
+        # Multi-select for accounts and categories
+        available_accounts = df['Account'].unique().tolist()
+        selected_accounts = st.multiselect('Select Accounts', available_accounts, default=available_accounts)
+        df = df[df['Account'].isin(selected_accounts)]
         
-        if st.sidebar.button('Load inception date styling:'):
-                st.session_state.loaded_portfolio.load_inception_date_styling()
-                trigger_rerun = True
+        available_categories = df['Category'].unique().tolist()
+        selected_categories = st.multiselect(
+            'Select Categories', available_categories, default=available_categories)
+        df = df[df['Category'].isin(selected_categories)]
 
-        column_config = {
-        "Account":
-            st.column_config.SelectboxColumn(
-                "Account ",
-                help="Select the account",
-                width="medium",
-                options=st.session_state.loaded_portfolio.accounts,
-            ),
-        "Currency":
-            st.column_config.SelectboxColumn(
-                "Currency",
-                help="Select the currency",
-                width="medium",
-                options=['NOK', 'EUR', 'USD'],
-            ),
+        # Currency selection
+        currency_options = ['NOK', 'USD', 'EUR']
+        selected_currency = st.selectbox('Choose Currency', currency_options)
 
-        "Category":
-            st.column_config.SelectboxColumn(
-                "Category",
-                help="Select the Category",
-                width="medium",
-                options=st.session_state.loaded_portfolio.categories,
-            ),
+        st.markdown('---')
+    
+        log_portfolio_change(df)
 
+        st.markdown('---')
 
-        # "Proxy":
-        #     st.column_config.SelectboxColumn(
-        #         "Proxy",
-        #         help="Select the Category",
-        #         width="medium",
-        #         options=st.session_state.proxies['name'].tolist(),
-        #     )
-    }
-
-        st.write('Update portfolio')
-        st.info(
-            "Select row and press 'delete' button on the keyboard to delete . Press '+' to add a new row")
-        
-        with st.form(key="Update portfolio"):
-            if selected_account != 'All accounts':
-                portfolio_data = st.session_state.loaded_portfolio.holdings[st.session_state.loaded_portfolio.holdings['account'] == selected_account]
-            else: 
-                portfolio_data = st.session_state.loaded_portfolio.holdings
-
-            updated_portfolio_data  = st.data_editor(
-                portfolio_data, num_rows="dynamic", column_config=column_config)  # type: ignore
-            
-            if st.form_submit_button(label="Update portfolio"):
-                
-                # Replaced the data in the portfolio with the updated data for the selected acount
-                if selected_account != 'All accounts':
-                    st.session_state.loaded_portfolio.holdings.loc[st.session_state.loaded_portfolio.holdings['account'] == selected_account] = updated_portfolio_data
-                else: 
-                    st.session_state.loaded_portfolio.holdings = updated_portfolio_data
-
-
-                st.session_state.loaded_portfolio.update_portfolio_holdings()
-                st.success("Portfolio updated")
+        df = df.style.background_gradient(cmap='Reds', subset=[f'Value ({selected_currency})'])
+        st.dataframe(df)
 
 
         with st.expander("Manage proxies"):
@@ -112,7 +65,7 @@ def streamlit_manage_portfolio():
                     st.session_state.loaded_portfolio.proxies.remove(proxy)
                     st.session_state.loaded_portfolio.update_portfolio_proxies()
                     st.success(f'Proxy {proxy} deleted')
-                    trigger_rerun = True
+                    st.session_state['trigger_rerun'] = True
 
                 new_proxy = st.text_input("Add new proxy")
                 if st.button('Add proxy'):
@@ -121,7 +74,7 @@ def streamlit_manage_portfolio():
                             st.session_state.loaded_portfolio.proxies.append(new_proxy)
                             st.session_state.loaded_portfolio.update_portfolio_proxies()
                             st.success(f'Proxy {new_proxy} added')
-                            trigger_rerun = True
+                            st.session_state['trigger_rerun'] = True
                         else:
                             st.error(f'Proxy {new_proxy} was not added.')
 
@@ -129,7 +82,7 @@ def streamlit_manage_portfolio():
             if st.button('Load new ETF proxies'):
                 with st.spinner('Loading proxies...'):
                     st.session_state.proxies = find_proxy_etf(min_proxy_age)
-                    trigger_rerun = True
+                    st.session_state['trigger_rerun'] = True
 
             if 'proxies' in st.session_state:
                 st.success('Loaded proxies:')
@@ -139,7 +92,7 @@ def streamlit_manage_portfolio():
                 # if st.button('Add proxies'):
                 #     loaded_portfolio.update_portfolio_proxies(selected_proxies)
                     
-                #     trigger_rerun = True
+                #     st.session_state['trigger_rerun'] = True
 
             else:
                 st.error('No proxies loaded')
@@ -155,7 +108,7 @@ def streamlit_manage_portfolio():
                     st.session_state.loaded_portfolio.accounts.remove(account)
                     st.session_state.loaded_portfolio.update_portfolio_accounts()
                     st.success(f'Account {account} deleted')
-                    trigger_rerun = True
+                    st.session_state['trigger_rerun'] = True
 
                 new_account = st.text_input("Add new account")
                 if st.button('Add account'):
@@ -164,7 +117,7 @@ def streamlit_manage_portfolio():
                             st.session_state.loaded_portfolio.accounts.append(new_account)
                             st.session_state.loaded_portfolio.update_portfolio_accounts()
                             st.success(f'Account {new_account} added')
-                            trigger_rerun = True
+                            st.session_state['trigger_rerun'] = True
                         else:
                             st.error(f'Account {new_account} was not added.')
 
@@ -177,7 +130,7 @@ def streamlit_manage_portfolio():
                     st.session_state.loaded_portfolio.categories.remove(category)
                     st.session_state.loaded_portfolio.update_portfolio_categories()
                     st.success(f'Category {category} deleted')
-                    trigger_rerun = True
+                    st.session_state['trigger_rerun'] = True
 
                 new_category = st.text_input("Add new category")
                 if st.button('Add category'):
@@ -187,7 +140,7 @@ def streamlit_manage_portfolio():
                             st.session_state.loaded_portfolio.update_portfolio_categories()
                             st.success(f'Category {new_category} added')
                             
-                            trigger_rerun = True
+                            st.session_state['trigger_rerun'] = True
                         else:
                             st.error(f'Category {new_category} was not added because it was too short or already existed.')
                
@@ -217,20 +170,21 @@ def streamlit_manage_portfolio():
 
                         if upload_status:
                             st.success("Portfolio uploaded")
-                            trigger_rerun = True
+                            st.session_state['trigger_rerun'] = True
                         else:
                             st.error("Failed to upload portfolio")
                     else:
                         st.error("No excel file uploaded")
 
     
+        if 'trigger_rerun' in st.session_state:
+   
+            if st.session_state.trigger_rerun:
 
-        if trigger_rerun:
-
-            if 'rerun_count' not in st.session_state:
-                st.session_state.rerun_count = 1
-            else:
-                st.session_state.rerun_count += 1
-            print(
-                f'reran program for the {st.session_state.rerun_count} time')
-            st.experimental_rerun()
+                if 'rerun_count' not in st.session_state:
+                    st.session_state.rerun_count = 1
+                else:
+                    st.session_state.rerun_count += 1
+                print(
+                    f'reran program for the {st.session_state.rerun_count} time')
+                st.experimental_rerun()

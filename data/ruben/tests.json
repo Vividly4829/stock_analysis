@@ -1,0 +1,18 @@
+{
+    "holdings": [
+        {
+            "Ticker": "SPY",
+            "Proxy": "",
+            "Category": "Example",
+            "Quantity": 1,
+            "Account": "Example",
+            "Currency": "NOK",
+            "Value (NOK)": 0,
+            "Value (EUR)": 0,
+            "Value (USD)": 0
+        }
+    ],
+    "accounts": [],
+    "categories": [],
+    "proxies": []
+}

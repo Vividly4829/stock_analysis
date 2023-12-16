@@ -1,0 +1,18 @@
+{
+    "holdings": [
+        {
+            "Ticker": "Example",
+            "Proxy": "Example",
+            "Category": "Example",
+            "Quantity": 1,
+            "Account": "Example",
+            "Currency": "NOK",
+            "Value (NOK)": 1,
+            "Value (EUR)": 1,
+            "Value (USD)": 1
+        }
+    ],
+    "accounts": [],
+    "categories": [],
+    "proxies": []
+}

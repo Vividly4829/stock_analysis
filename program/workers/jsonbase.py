@@ -7,6 +7,7 @@ from datetime import datetime
 import traceback
 import json
 import streamlit as st
+from program.workers.find_valuation import calculate_portfolio_value
 
 
 data_folder = "data"
@@ -19,7 +20,6 @@ def write_json(file_path, data):
     with open(file_path, 'w') as file:
         json.dump(data, file, indent=4)
 
-@st.cache_data
 def get_portfolio_names(user_name):
     try:
         user_folder = os.path.join(data_folder, user_name)
@@ -38,11 +38,37 @@ class JsonBaseUserPortfolio:
         self.categories = self.get_portfolio_categories()
         self.proxies = self.get_portfolio_proxies()
 
+    def create_new_portfolio(self):
+        try:
+            file_path = os.path.join(data_folder, self.user_name, f'{self.user_portfolio_name}.json')
+            data = {
+                'holdings': [{
+                    "Ticker": "Example",
+                    "Proxy": "Example",
+                    "Category": "Example",
+                    "Quantity": 1,
+                    "Account": "Example",
+                    "Currency": 'NOK',
+                    "Value (NOK)": 1,
+                    "Value (EUR)": 1,
+                    "Value (USD)": 1,
+                }],
+                'accounts': [],
+                'categories': [],
+                'proxies': []
+            }
+            write_json(file_path, data)
+            return True
+        except:
+            return False
+
     def get_etf_inception_date_yfinance(self, ticker):
         try:
+            if ticker == 'Cash':
+                return datetime.today().strftime('%Y-%m-%d')
             etf = yf.Ticker(ticker)
             history = etf.history(period='max')
-            inception_date = history.index[0].date()         
+            inception_date = history.index[0].date()          
             return inception_date
         except:
             return datetime.today().strftime('%Y-%m-%d')
@@ -52,14 +78,33 @@ class JsonBaseUserPortfolio:
             try:
                 holdings = self.user_portfolio['holdings']
                 df = pd.DataFrame(holdings)
+
+                # Get all the accounts and categories from the holdings and update the categories and accounts in the portfolio with values that were not there before
+                accounts = df['Account'].unique().tolist()
+                categories = df['Category'].unique().tolist()
+                proxies = df['Proxy'].unique().tolist()
+
+                # Update the accounts and categories in the portfolio
+                self.accounts = accounts
+                self.categories = categories
+  
+
+                self.update_portfolio_accounts()
+                self.update_portfolio_categories()
+             
+
+
+                df = calculate_portfolio_value(df)
+            
+                # Add a column called 'proxies' to the dataframe if it doesn't exist
+                if 'proxies' not in df.columns:
+                    df['Proxy'] = ''
                 return df
             except:
                 tb = traceback.format_exc()
                 print(tb)
                 return None
 
-    def load_inception_date_styling(self):
-        pass
 
     def load_inception_dates(self):
         if self.holdings is not None:
@@ -142,15 +187,5 @@ class JsonBaseUserPortfolio:
             self.save_portfolio()
         else:
             print('failed to update proxies')
-
-
-# Example usage
-portfolios = get_portfolio_names('ruben')
-print(portfolios)
-
-user_portfolio = JsonBaseUserPortfolio('ruben', portfolios[0])
-print(user_portfolio.holdings)
-print(user_portfolio.accounts)
-print(user_portfolio.categories)
 
 
