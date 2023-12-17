@@ -22,24 +22,36 @@ user_portfolio = st.sidebar.selectbox(
 
 if st.sidebar.button('Load portfolio'):
     with st.spinner('Loading user portfolio...'):
+        time.sleep(2)
         st.session_state.loaded_portfolio = JsonBaseUserPortfolio(user_name, user_portfolio)
         st.session_state.loaded_portfolio_name = user_portfolio
         st.experimental_rerun()
 st.sidebar.markdown('---')
 
 
-selected_tab = st.sidebar.radio(
-    "Menu:",
-    ["Show portfolio", "Manage portfolio"]
-)
 
+if 'loaded_portfolio' in st.session_state:
 # Show content based on selected radio button
-if selected_tab == "Show portfolio":
-    streamlit_portfolio_holdings()
-elif selected_tab == "Manage portfolio":
-    streamlit_manage_portfolio()
+
+        selected_tab = st.sidebar.radio(
+        "Menu:",
+        ["Portfolio visualisation", "Manage portfolio"]
+                    )
+
+        if selected_tab == "Portfolio visualisation":
+            streamlit_portfolio_holdings()
+        elif selected_tab == "Manage portfolio":
+            streamlit_manage_portfolio()
+        st.sidebar.markdown('---')
+
+        st.sidebar.write(
+            'total value:', st.session_state.loaded_portfolio.total_value)
+else: 
+    st.sidebar.info('No portfolio loaded - load portfolio in side menu.')
 
 st.sidebar.markdown('---')
+
+
 
 st.sidebar.write('Create new portfolio')
 new_portfolio_name = st.sidebar.text_input('New portfolio name', value='')

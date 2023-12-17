@@ -7,7 +7,7 @@ from datetime import datetime
 import traceback
 import json
 import streamlit as st
-from program.workers.find_valuation import calculate_portfolio_value
+from program.workers.find_valuation import calculate_portfolio_value, calculate_portfolio_total_value
 
 
 data_folder = "data"
@@ -34,9 +34,12 @@ class JsonBaseUserPortfolio:
         self.user_portfolio_name = user_portfolio_name
         self.user_portfolio = self.get_portfolio()
         self.holdings = self.get_portfolio_holdings_df()
+        self.update_portfolio_holdings()
+        self.save_portfolio()
         self.accounts = self.get_portfolio_accounts()
         self.categories = self.get_portfolio_categories()
         self.proxies = self.get_portfolio_proxies()
+        self.total_value = None
 
     def create_new_portfolio(self):
         try:
@@ -73,16 +76,16 @@ class JsonBaseUserPortfolio:
         except:
             return datetime.today().strftime('%Y-%m-%d')
 
-    def get_portfolio_holdings_df(self):
+    def get_portfolio_holdings_df(self, tickers: list | None = None):
+
         if self.user_portfolio is not None:
             try:
                 holdings = self.user_portfolio['holdings']
                 df = pd.DataFrame(holdings)
-
                 # Get all the accounts and categories from the holdings and update the categories and accounts in the portfolio with values that were not there before
                 accounts = df['Account'].unique().tolist()
                 categories = df['Category'].unique().tolist()
-                proxies = df['Proxy'].unique().tolist()
+  
 
                 # Update the accounts and categories in the portfolio
                 self.accounts = accounts
@@ -93,17 +96,26 @@ class JsonBaseUserPortfolio:
                 self.update_portfolio_categories()
              
 
-
-                df = calculate_portfolio_value(df)
-            
+                df = calculate_portfolio_value(df, tickers=tickers)
+                total_values = calculate_portfolio_total_value(df)
+                self.total_value = total_values
+                # Save with the new valuation
+      
+                self.save_portfolio()
+                self.holdings = df
+                
                 # Add a column called 'proxies' to the dataframe if it doesn't exist
                 if 'proxies' not in df.columns:
                     df['Proxy'] = ''
+                
+                
+                
                 return df
             except:
                 tb = traceback.format_exc()
                 print(tb)
                 return None
+            
 
 
     def load_inception_dates(self):
@@ -139,6 +151,9 @@ class JsonBaseUserPortfolio:
             file_path = os.path.join(data_folder, self.user_name, f'{self.user_portfolio_name}.json')
             return read_json(file_path)
         except:
+            tb = traceback.format_exc()
+            print(tb)
+            print('failed to get portfolio, ', self.user_name, self.user_portfolio_name)
             return None
 
     def save_portfolio(self):
@@ -151,18 +166,18 @@ class JsonBaseUserPortfolio:
         
     def upload_excel_portfolio(self, new_portfolio: list):
         try:
-            print('uploading excel portfolio')
-            print(new_portfolio)
+ 
             if self.user_portfolio is not None:
                 self.user_portfolio['holdings'] = new_portfolio
                 self.save_portfolio()
                 self.holdings = self.get_portfolio_holdings_df()
         except:
             return False
-
+        
     def update_portfolio_holdings(self):
         if self.holdings is not None and self.user_portfolio is not None:
             self.user_portfolio['holdings'] = self.holdings.to_dict(orient='records')
+            self.user_portfolio['total value'] = self.total_value
             self.save_portfolio()
         else:
             print('failed to update holdings')
@@ -187,5 +202,4 @@ class JsonBaseUserPortfolio:
             self.save_portfolio()
         else:
             print('failed to update proxies')
-
 

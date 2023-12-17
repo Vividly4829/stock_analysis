@@ -2,12 +2,7 @@ import streamlit as st
 from program.streamlit_functions.manage_portfolio.proxy_etf_list import find_proxy_etf
 from program.streamlit_functions.manage_portfolio.log_change import log_portfolio_change    
 from program.workers.jsonbase import *
-import os
-import sys
 import pandas as pd
-import time
-
-
 
 def streamlit_manage_portfolio():
 
@@ -18,8 +13,6 @@ def streamlit_manage_portfolio():
         st.info('No portfolio loaded - load portfolio in side menu.')
   
     if 'loaded_portfolio' in st.session_state:
-        
-        
         st.sidebar.write('Options:')
         if st.sidebar.button('Load inception dates:'):
             with st.spinner('Loading inception dates...'):
@@ -49,7 +42,7 @@ def streamlit_manage_portfolio():
         st.markdown('---')
 
         df = df.style.background_gradient(cmap='Reds', subset=[f'Value ({selected_currency})'])
-        st.dataframe(df)
+        st.dataframe(df, width=1000)
 
 
         with st.expander("Manage proxies"):
@@ -67,7 +60,10 @@ def streamlit_manage_portfolio():
                     st.success(f'Proxy {proxy} deleted')
                     st.session_state['trigger_rerun'] = True
 
-                new_proxy = st.text_input("Add new proxy")
+                
+                st.session_state.proxies = find_proxy_etf(min_proxy_age)
+                new_proxy = st.selectbox(
+                    "Select new proxy", options=list(st.session_state.proxies['Symbol']))
                 if st.button('Add proxy'):
                     if new_proxy is not None:
                         if len(new_proxy) > 0 and new_proxy not in st.session_state.loaded_portfolio.proxies:
@@ -79,25 +75,14 @@ def streamlit_manage_portfolio():
                             st.error(f'Proxy {new_proxy} was not added.')
 
 
-            if st.button('Load new ETF proxies'):
-                with st.spinner('Loading proxies...'):
-                    st.session_state.proxies = find_proxy_etf(min_proxy_age)
-                    st.session_state['trigger_rerun'] = True
 
             if 'proxies' in st.session_state:
-                st.success('Loaded proxies:')
-                selected_proxies = st.data_editor(st.session_state.proxies)
-                # list of selected proxie tickers
-                selected_proxy_tickers = selected_proxies['Symbol'].tolist()
-                # if st.button('Add proxies'):
-                #     loaded_portfolio.update_portfolio_proxies(selected_proxies)
-                    
-                #     st.session_state['trigger_rerun'] = True
+                proxy_df = st.session_state.proxies
+                # Add heatmap styling for the inception date column
+                proxy_df = proxy_df.style.background_gradient(
+                    cmap='Reds', subset=['Inception Date'])
+                st.dataframe(proxy_df)
 
-            else:
-                st.error('No proxies loaded')
-
-         
 
         with st.expander("Manage accounts"):
             # Create a streamlit select box to select an account

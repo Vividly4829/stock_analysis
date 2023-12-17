@@ -9,20 +9,19 @@ import streamlit as st
 c = CurrencyRates()
 
 
-def calculate_portfolio_value(df: pd.DataFrame):
+def calculate_portfolio_value(df: pd.DataFrame, tickers = None) -> pd.DataFrame:
 
 # Define a function to calculate the current value in NOK, EUR, and USD
     def calculate_value(row):
         ticker = row['Ticker']
+
+        # Skip tickers that are not in the list of tickers if the list is not empty
+        if tickers is not None and ticker not in tickers:
+            return row['Value (NOK)'], row['Value (EUR)'], row['Value (USD)']
         quantity = row['Quantity']
         currency = row['Currency']
-        account = row['Account']
-        proxy = row['Proxy']
-
 
         ticker = ticker.strip()  # Remove leading/trailing whitespaces
-
-
         if ticker == 'CASH' or ticker == 'FUND':
             value = quantity
         else:
@@ -62,3 +61,12 @@ def calculate_portfolio_value(df: pd.DataFrame):
     # Apply the function to calculate the current value for each row
     df['Value (NOK)'], df['Value (EUR)'], df['Value (USD)'] = zip(*df.apply(calculate_value, axis=1))
     return df
+
+def calculate_portfolio_total_value(df: pd.DataFrame):
+    # Calculate the total value of the portfolio in NOK, EUR, and USD
+    total_value_nok = int(df['Value (NOK)'].sum())
+    total_value_eur = int(df['Value (EUR)'].sum())
+    total_value_usd = int(df['Value (USD)'].sum())
+
+    # Return a dict with the total values
+    return {'NOK': total_value_nok, 'EUR': total_value_eur, 'USD': total_value_usd}

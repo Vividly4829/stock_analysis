@@ -14,7 +14,7 @@ def streamlit_portfolio_holdings():
     dataframe_tab, sunburst_tab = st.tabs(["Dataframe", "Sunburst"])
 
 
-    df = pd.DataFrame(st.session_state.loaded_portfolio.holdings)
+    df = st.session_state.loaded_portfolio.holdings
     
     # Multi-select for accounts and categories
     available_accounts = df['Account'].unique().tolist()
@@ -55,7 +55,7 @@ def streamlit_portfolio_holdings():
 
     # add a heatmap styling to the dataframe
     df = df.style.background_gradient(cmap='Reds', subset=[f'Value ({selected_currency})'])
-    dataframe_tab.dataframe(df, width=1000)
+    dataframe_tab.dataframe(df, width=1000, height=700)
 
 
     if st.session_state['trigger_rerun']:
