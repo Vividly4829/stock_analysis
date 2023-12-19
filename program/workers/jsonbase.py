@@ -40,6 +40,7 @@ class JsonBaseUserPortfolio:
         self.categories = self.get_portfolio_categories()
         self.proxies = self.get_portfolio_proxies()
         self.total_value = None
+        self.exchange_rates = None
 
     def create_new_portfolio(self):
         try:
@@ -96,8 +97,10 @@ class JsonBaseUserPortfolio:
                 self.update_portfolio_categories()
              
 
-                df = calculate_portfolio_value(df, tickers=tickers)
+                df, exchange_rates = calculate_portfolio_value(df, tickers=tickers)
                 total_values = calculate_portfolio_total_value(df)
+
+                self.exchange_rates = exchange_rates
                 self.total_value = total_values
                 # Save with the new valuation
       
@@ -107,8 +110,6 @@ class JsonBaseUserPortfolio:
                 # Add a column called 'proxies' to the dataframe if it doesn't exist
                 if 'proxies' not in df.columns:
                     df['Proxy'] = ''
-                
-                
                 
                 return df
             except:
@@ -178,6 +179,7 @@ class JsonBaseUserPortfolio:
         if self.holdings is not None and self.user_portfolio is not None:
             self.user_portfolio['holdings'] = self.holdings.to_dict(orient='records')
             self.user_portfolio['total value'] = self.total_value
+            self.user_portfolio['exchange rates'] = self.exchange_rates
             self.save_portfolio()
         else:
             print('failed to update holdings')

@@ -22,12 +22,10 @@ user_portfolio = st.sidebar.selectbox(
 
 if st.sidebar.button('Load portfolio'):
     with st.spinner('Loading user portfolio...'):
-        time.sleep(2)
         st.session_state.loaded_portfolio = JsonBaseUserPortfolio(user_name, user_portfolio)
         st.session_state.loaded_portfolio_name = user_portfolio
         st.experimental_rerun()
 st.sidebar.markdown('---')
-
 
 
 if 'loaded_portfolio' in st.session_state:
@@ -45,7 +43,10 @@ if 'loaded_portfolio' in st.session_state:
         st.sidebar.markdown('---')
 
         st.sidebar.write(
-            'total value:', st.session_state.loaded_portfolio.total_value)
+            'total value:', st.session_state.loaded_portfolio.user_portfolio['total value'])
+        
+        exchange_rate_expander = st.sidebar.expander('Exchange rates')
+        exchange_rate_expander.write(st.session_state.loaded_portfolio.user_portfolio['exchange rates'])
 else: 
     st.sidebar.info('No portfolio loaded - load portfolio in side menu.')
 

@@ -35,25 +35,24 @@ def streamlit_portfolio_holdings():
 
     # Sunburst Layer Selection
 
-    options = ['Account', 'Category', 'Ticker']
-    first_layer = sunburst_tab.selectbox('Select the inner circle', options)
+    options = ['Category', 'Ticker', 'Account']
+    first_layer = sunburst_tab.selectbox('Select the inner circle', options, index=0)
     second_options = [opt for opt in options if opt != first_layer]
-    second_layer = sunburst_tab.selectbox('Select the second circle', second_options)
-    
+    second_layer = sunburst_tab.selectbox('Select the second circle', second_options, index=0)
+    third_options = [opt for opt in options if opt != first_layer and opt != second_layer]
+    third_layer = sunburst_tab.selectbox('Select the third circle', third_options, index=0)
 
+    fig_sunburst = px.sunburst(df, path=[first_layer, second_layer, third_layer], values=f'Value ({selected_currency})', title=f'Sunburst Chart (Total: {total_value:,.2f} {selected_currency})')
 
-    fig_sunburst = px.sunburst(df, path=[first_layer, second_layer], values=f'Value ({selected_currency})', title=f'Sunburst Chart (Total: {total_value:,.2f} {selected_currency})')
+    # Update the traces to show label and percentage on the chart
+    fig_sunburst.update_traces(textinfo='label+percent parent')
 
-    # Custom hover template to show both value and percentage of total
-    hover_template = "%{label}<br>Value: %{value:,.2f}<br>Percentage: %{percent:.1%}"
-    fig_sunburst.update_traces(hovertemplate=hover_template)
-    
     fig_sunburst.update_layout(height=1200, width=1200)
     sunburst_tab.plotly_chart(fig_sunburst)
-        
+
     # Show the filtered dataframe
 
-    # add a heatmap styling to the dataframe
+    # Add a heatmap styling to the dataframe
     df = df.style.background_gradient(cmap='Reds', subset=[f'Value ({selected_currency})'])
     dataframe_tab.dataframe(df, width=1000, height=700)
 

@@ -1,18 +1,24 @@
 import pandas as pd
 import yfinance as yf
-from forex_python.converter import CurrencyRates
+
 import traceback
-from dataclasses import dataclass
 import streamlit as st
+import datetime
 
+from program.workers.find_fund_valuation import find_norwegian_mutual_fund_value
+from program.workers.currency_exchange_rate_scraper import get_exchange_rates
 # Create a currency converter object
-c = CurrencyRates()
 
 
-def calculate_portfolio_value(df: pd.DataFrame, tickers = None) -> pd.DataFrame:
 
+def calculate_portfolio_value(df: pd.DataFrame, tickers = None):
+
+
+    usd_to_nok_rate, usd_to_eur_rate, eur_to_nok_rate = get_exchange_rates()
 # Define a function to calculate the current value in NOK, EUR, and USD
     def calculate_value(row):
+
+        # print(f' Trying to find valuation for row: {row["Ticker" ]}')
         ticker = row['Ticker']
 
         # Skip tickers that are not in the list of tickers if the list is not empty
@@ -20,19 +26,37 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers = None) -> pd.DataFrame:
             return row['Value (NOK)'], row['Value (EUR)'], row['Value (USD)']
         quantity = row['Quantity']
         currency = row['Currency']
+        category = row['Category']
 
         ticker = ticker.strip()  # Remove leading/trailing whitespaces
-        if ticker == 'CASH' or ticker == 'FUND':
+        if category == 'CASH':
             value = quantity
+
+
+        elif category == 'FUND':
+            fund_name = ticker.split('!')[0]
+
+            st.warning(f'Fetching data for fund {fund_name}...')
+            value = find_norwegian_mutual_fund_value(quantity, fund_name)
+            currency = 'NOK' 
+            if value is None:
+                st.error(f'Failed to fetch data for fund{ticker}...')
+                tb = traceback.format_exc()
+                print(f'Failed to fetch data for {ticker}...')
+                print(tb)
+                value = 0
+                currency = 'NOK'  # Set currency to NOK if data fetching fails
         else:
             try:
-                st.info(f'Fetching data for {ticker}...')
+                st.info(f'Fetching data for stock {ticker}...')
+                # print(f'Fetching data for stock {ticker}...')
                 stock = yf.Ticker(ticker)
                 current_price = stock.info['previousClose']
                 value = current_price * quantity
                 currency = stock.info['currency']
+                # print(f'Found data for  {ticker}...' + str(value))
             except:
-                st.error(f'Failed to fetch data for {ticker}...')
+                st.error(f'Failed to fetch data for stock {ticker}...')
                 tb = traceback.format_exc()
                 print(f'Failed to fetch data for {ticker}...')
                 print(tb)
@@ -41,15 +65,15 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers = None) -> pd.DataFrame:
 
         if currency == 'NOK':
             nok_value = value
-            eur_value = c.convert('NOK', 'EUR', value)
-            usd_value = c.convert('NOK', 'USD', value)
+            eur_value = value / eur_to_nok_rate # type: ignore
+            usd_value = value / usd_to_nok_rate # type: ignore
         elif currency == 'EUR':
-            nok_value = c.convert('EUR', 'NOK', value)
+            nok_value = value * eur_to_nok_rate # type: ignore
             eur_value = value
-            usd_value = c.convert('EUR', 'USD', value)
+            usd_value = value * usd_to_eur_rate # type: ignore
         elif currency == 'USD':
-            nok_value = c.convert('USD', 'NOK', value)
-            eur_value = c.convert('USD', 'EUR', value)
+            nok_value = value * usd_to_nok_rate # type: ignore
+            eur_value = value / usd_to_eur_rate # type: ignore
             usd_value = value
         else:
             nok_value = 0
@@ -60,7 +84,11 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers = None) -> pd.DataFrame:
 
     # Apply the function to calculate the current value for each row
     df['Value (NOK)'], df['Value (EUR)'], df['Value (USD)'] = zip(*df.apply(calculate_value, axis=1))
-    return df
+    
+  
+    exchange_rates = {'EUR NOK': eur_to_nok_rate, 'USD EUR': usd_to_eur_rate, 'USD NOK': usd_to_nok_rate}
+    # Return the updated dataframe and the used exchange rates
+    return df, exchange_rates
 
 def calculate_portfolio_total_value(df: pd.DataFrame):
     # Calculate the total value of the portfolio in NOK, EUR, and USD

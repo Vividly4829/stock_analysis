@@ -34,7 +34,8 @@ def streamlit_manage_portfolio():
         # Currency selection
         currency_options = ['NOK', 'USD', 'EUR']
         selected_currency = st.selectbox('Choose Currency', currency_options)
-
+        total_value = df[f'Value ({selected_currency})'].sum()
+        st.header(f'Total portfolio value: {total_value:,.2f} {selected_currency}')
         st.markdown('---')
     
         log_portfolio_change(df)
