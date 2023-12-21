@@ -161,6 +161,15 @@ class JsonBaseUserPortfolio:
         try:
             file_path = os.path.join(data_folder, self.user_name, f'{self.user_portfolio_name}.json')
             write_json(file_path, self.user_portfolio)
+
+            # Also write the portfolio to a folder called 'portfolio logs' with the date as the name of the file
+            portfolio_logs_folder = os.path.join(data_folder, self.user_name, 'portfolio logs', self.user_portfolio_name)
+            if not os.path.exists(portfolio_logs_folder):
+                os.makedirs(portfolio_logs_folder)
+            date = datetime.today().strftime('%Y-%m-%d')
+            file_path = os.path.join(portfolio_logs_folder, f'{date}.json')
+            write_json(file_path, self.user_portfolio)
+            
             return True
         except:
             return False

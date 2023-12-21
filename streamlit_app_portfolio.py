@@ -13,8 +13,8 @@ from program.workers.jsonbase import *
 loaded_portfolio_name = st.empty()
 st.session_state.loaded_portfolio_name = loaded_portfolio_name
 
-user_name = 'ruben'
-portfolios = get_portfolio_names(user_name=user_name)
+st.session_state.user_name = 'ruben'
+portfolios = get_portfolio_names(user_name=st.session_state.user_name)
 
 user_portfolio = st.sidebar.selectbox(
     "Select portfolio", options=portfolios)
@@ -22,7 +22,8 @@ user_portfolio = st.sidebar.selectbox(
 
 if st.sidebar.button('Load portfolio'):
     with st.spinner('Loading user portfolio...'):
-        st.session_state.loaded_portfolio = JsonBaseUserPortfolio(user_name, user_portfolio)
+        st.session_state.loaded_portfolio = JsonBaseUserPortfolio(
+            st.session_state.user_name, user_portfolio)
         st.session_state.loaded_portfolio_name = user_portfolio
         st.experimental_rerun()
 st.sidebar.markdown('---')
@@ -64,8 +65,8 @@ if st.sidebar.button('Create new portfolio'):
         st.sidebar.error('Portfolio with that name already exists.')
         st.stop()
     
-
-    new_portfolio = JsonBaseUserPortfolio(user_name, new_portfolio_name)
+    new_portfolio = JsonBaseUserPortfolio(
+        st.session_state.user_name_name, new_portfolio_name)
     new_portfolio.create_new_portfolio()
     st.sidebar.success(f'Created new portfolio with name {new_portfolio_name}.')
     time.sleep(0.5)

@@ -645,9 +645,9 @@
             "Quantity": 219.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 146894,
-            "Value (EUR)": 12991,
-            "Value (USD)": 14285
+            "Value (NOK)": 146933,
+            "Value (EUR)": 12994,
+            "Value (USD)": 14289
         },
         {
             "Ticker": "VI-DBNMI.OSE!DNB MILJOINVEST A",
@@ -667,9 +667,9 @@
             "Quantity": 745.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 245812,
-            "Value (EUR)": 21739,
-            "Value (USD)": 23904
+            "Value (NOK)": 245164,
+            "Value (EUR)": 21682,
+            "Value (USD)": 23841
         }
     ],
     "accounts": [
@@ -697,9 +697,9 @@
         "QQQ"
     ],
     "total value": {
-        "NOK": 44419628,
-        "EUR": 4474712,
-        "USD": 4241998
+        "NOK": 44419019,
+        "EUR": 4474658,
+        "USD": 4241939
     },
     "exchange rates": {
         "EUR NOK": 11.307214268062229,
