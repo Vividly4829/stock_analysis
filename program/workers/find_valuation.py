@@ -27,13 +27,14 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers = None):
         quantity = row['Quantity']
         currency = row['Currency']
         category = row['Category']
+        type = row['Type']
 
         ticker = ticker.strip()  # Remove leading/trailing whitespaces
         if category == 'CASH':
             value = quantity
 
 
-        elif category == 'FUND':
+        elif 'FUND' in type:
             fund_name = ticker.split('!')[0]
 
             st.warning(f'Fetching data for fund {fund_name}...')

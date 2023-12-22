@@ -1,5 +1,4 @@
 import streamlit as st
-from program.streamlit_functions.manage_portfolio.proxy_etf_list import find_proxy_etf
 from program.streamlit_functions.manage_portfolio.log_change import log_portfolio_change    
 from program.workers.jsonbase import *
 import pandas as pd
@@ -46,45 +45,27 @@ def streamlit_manage_portfolio():
         st.dataframe(df, width=1000)
 
 
-        with st.expander("Manage proxies"):
-            st.info("Proxies are used to predict future results of newer ETF's based on historical results of ETF's with similar characteristics that have existed for X years or more. The older, the better the prediction of correlation in a portfolio.")
-            min_proxy_age = st.slider(
-                "Select min age of proxies", min_value=0, max_value=30, value=20)
-            
-            # Create a streamlit select box to select a proxy
-            if st.session_state.loaded_portfolio.proxies is not None:
-                proxy = st.selectbox(
-                    "Select proxy", options=list(st.session_state.loaded_portfolio.proxies))
-                if st.button('Delete proxy'):
-                    st.session_state.loaded_portfolio.proxies.remove(proxy)
-                    st.session_state.loaded_portfolio.update_portfolio_proxies()
-                    st.success(f'Proxy {proxy} deleted')
+        with st.expander("Manage types"):
+      
+            # Create a streamlit select box to select a types
+            if st.session_state.loaded_portfolio.types is not None:
+                types = st.selectbox(
+                    "Select types", options=list(st.session_state.loaded_portfolio.types))
+                if st.button('Delete types'):
+                    st.session_state.loaded_portfolio.types.remove(types)
+                    st.session_state.loaded_portfolio.update_portfolio_types()
+                    st.success(f'types {types} deleted')
                     st.session_state['trigger_rerun'] = True
 
                 
-                st.session_state.proxies = find_proxy_etf(min_proxy_age)
-                new_proxy = st.selectbox(
-                    "Select new proxy", options=list(st.session_state.proxies['Symbol']))
-                if st.button('Add proxy'):
-                    if new_proxy is not None:
-                        if len(new_proxy) > 0 and new_proxy not in st.session_state.loaded_portfolio.proxies:
-                            st.session_state.loaded_portfolio.proxies.append(new_proxy)
-                            st.session_state.loaded_portfolio.update_portfolio_proxies()
-                            st.success(f'Proxy {new_proxy} added')
-                            st.session_state['trigger_rerun'] = True
-                        else:
-                            st.error(f'Proxy {new_proxy} was not added.')
+                new_type = st.text_input("Add new types")
+                if st.button('Add types'):
+                    st.session_state.loaded_portfolio.types.append(new_type)
+                    st.session_state.loaded_portfolio.update_portfolio_types()
+                    st.success(f'types {new_type} added')
+                    st.session_state['trigger_rerun'] = True
 
-
-
-            if 'proxies' in st.session_state:
-                proxy_df = st.session_state.proxies
-                # Add heatmap styling for the inception date column
-                proxy_df = proxy_df.style.background_gradient(
-                    cmap='Reds', subset=['Inception Date'])
-                st.dataframe(proxy_df)
-
-
+            
         with st.expander("Manage accounts"):
             # Create a streamlit select box to select an account
             if st.session_state.loaded_portfolio.accounts is not None:

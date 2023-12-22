@@ -38,7 +38,7 @@ class JsonBaseUserPortfolio:
         self.save_portfolio()
         self.accounts = self.get_portfolio_accounts()
         self.categories = self.get_portfolio_categories()
-        self.proxies = self.get_portfolio_proxies()
+        self.types = self.get_portfolio_types()
         self.total_value = None
         self.exchange_rates = None
 
@@ -48,7 +48,7 @@ class JsonBaseUserPortfolio:
             data = {
                 'holdings': [{
                     "Ticker": "Example",
-                    "Proxy": "Example",
+                    "Type": "Example",
                     "Category": "Example",
                     "Quantity": 1,
                     "Account": "Example",
@@ -59,7 +59,7 @@ class JsonBaseUserPortfolio:
                 }],
                 'accounts': [],
                 'categories': [],
-                'proxies': []
+                'types': []
             }
             write_json(file_path, data)
             return True
@@ -107,9 +107,6 @@ class JsonBaseUserPortfolio:
                 self.save_portfolio()
                 self.holdings = df
                 
-                # Add a column called 'proxies' to the dataframe if it doesn't exist
-                if 'proxies' not in df.columns:
-                    df['Proxy'] = ''
                 
                 return df
             except:
@@ -123,11 +120,11 @@ class JsonBaseUserPortfolio:
         if self.holdings is not None:
             self.holdings['Inception Date'] = self.holdings['Ticker'].apply(lambda x: self.get_etf_inception_date_yfinance(x))
 
-    def get_portfolio_proxies(self):
+    def get_portfolio_types(self):
         if self.user_portfolio is not None:
             try:
-                proxies = self.user_portfolio['proxies']
-                return proxies
+                types = self.user_portfolio['types']
+                return types
             except:
                 return []
 
@@ -163,7 +160,7 @@ class JsonBaseUserPortfolio:
             write_json(file_path, self.user_portfolio)
 
             # Also write the portfolio to a folder called 'portfolio logs' with the date as the name of the file
-            portfolio_logs_folder = os.path.join(data_folder, self.user_name, 'portfolio logs', self.user_portfolio_name)
+            portfolio_logs_folder = os.path.join(data_folder, self.user_name, 'portfolioLogs', self.user_portfolio_name)
             if not os.path.exists(portfolio_logs_folder):
                 os.makedirs(portfolio_logs_folder)
             date = datetime.today().strftime('%Y-%m-%d')
@@ -207,10 +204,10 @@ class JsonBaseUserPortfolio:
         else: 
             print('failed to update categories')
 
-    def update_portfolio_proxies(self):
-        if self.proxies is not None and self.user_portfolio is not None:
-            self.user_portfolio['proxies'] = self.proxies
+    def update_portfolio_types(self):
+        if self.types is not None and self.user_portfolio is not None:
+            self.user_portfolio['types'] = self.types
             self.save_portfolio()
         else:
-            print('failed to update proxies')
+            print('failed to update types')
 
