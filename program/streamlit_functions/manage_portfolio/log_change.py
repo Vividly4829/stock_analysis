@@ -16,8 +16,8 @@ def log_portfolio_change(df):
         trade_category = col2.selectbox(
             'Category', options=st.session_state.loaded_portfolio.categories)
         trade_ticker = col3.text_input('Ticker')
-        trade_proxy = col4.selectbox(
-            'Proxy', options=st.session_state.loaded_portfolio.proxies + [None])
+        trade_type = col4.selectbox(
+            'type', options=st.session_state.loaded_portfolio.types + [None])
         trade_units = col5.number_input('Units', value=0)
         trade_currency = col6.selectbox(
             'Currency', options=[None, 'NOK', 'USD', 'EUR'])
@@ -26,7 +26,7 @@ def log_portfolio_change(df):
             # Add the new line to the dataframe in st.session_state.loaded_portfolio.holdings
             new_line = {
                 'Ticker': trade_ticker,
-                'Proxy': trade_proxy,
+                'type': trade_type,
                 'Category': trade_category,
                 'Quantity': trade_units,
                 'Account': trade_account,
@@ -57,8 +57,8 @@ def log_portfolio_change(df):
             'Ticker', options=df['Ticker'].unique().tolist())
         trade_category = col3.selectbox('Category', options=df['Category'].unique().tolist(), index=df['Category'].unique(
         ).tolist().index(df.loc[(df['Account'] == trade_account) & (df['Ticker'] == trade_ticker)]['Category'].values[0]))
-        trade_proxy = col4.selectbox(
-            'Proxy', options=st.session_state.loaded_portfolio.proxies + [None])
+        trade_type = col4.selectbox(
+            'type', options=st.session_state.loaded_portfolio.types + [None])
         trade_units = col5.number_input('Units', value=int(st.session_state.loaded_portfolio.holdings.loc[(st.session_state.loaded_portfolio.holdings['Account'] == trade_account) & (
             st.session_state.loaded_portfolio.holdings['Ticker'] == trade_ticker)]['Quantity'].values[0]), step=1)
 
@@ -70,9 +70,9 @@ def log_portfolio_change(df):
             st.session_state.loaded_portfolio.holdings.loc[
                 (st.session_state.loaded_portfolio.holdings['Account'] == trade_account) &
                 (st.session_state.loaded_portfolio.holdings['Ticker'] == trade_ticker),
-                ['Ticker', 'Proxy', 'Category',
+                ['Ticker', 'type', 'Category',
                     'Quantity', 'Account', 'Currency']
-            ] = [trade_ticker, trade_proxy, trade_category, trade_units, trade_account, trade_currency]
+            ] = [trade_ticker, trade_type, trade_category, trade_units, trade_account, trade_currency]
 
             # Saves to the database
             st.session_state.loaded_portfolio.update_portfolio_holdings()

@@ -71,20 +71,20 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers = None):
         elif currency == 'EUR':
             nok_value = value * eur_to_nok_rate # type: ignore
             eur_value = value
-            usd_value = value * usd_to_eur_rate # type: ignore
+            usd_value = value / usd_to_eur_rate # type: ignore
         elif currency == 'USD':
             nok_value = value * usd_to_nok_rate # type: ignore
-            eur_value = value / usd_to_eur_rate # type: ignore
+            eur_value = value * usd_to_eur_rate # type: ignore
             usd_value = value
         else:
             nok_value = 0
             eur_value = 0
             usd_value = 0
 
-        return int(nok_value), int(eur_value), int(usd_value)
+        return int(nok_value), int(eur_value), int(usd_value), currency
 
     # Apply the function to calculate the current value for each row
-    df['Value (NOK)'], df['Value (EUR)'], df['Value (USD)'] = zip(*df.apply(calculate_value, axis=1))
+    df['Value (NOK)'], df['Value (EUR)'], df['Value (USD)'], df['Currency'] = zip(*df.apply(calculate_value, axis=1))
     
   
     exchange_rates = {'EUR NOK': eur_to_nok_rate, 'USD EUR': usd_to_eur_rate, 'USD NOK': usd_to_nok_rate}
