@@ -52,6 +52,9 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers = None):
                 st.info(f'Fetching data for stock {ticker}...')
                 # print(f'Fetching data for stock {ticker}...')
                 stock = yf.Ticker(ticker)
+                hist = stock.history(period="max")  # 'max' for all available data
+                hist.to_csv(f'data/historical_stock_data/{ticker}_historical_data.csv')
+
                 current_price = stock.info['previousClose']
                 value = current_price * quantity
                 currency = stock.info['currency']
