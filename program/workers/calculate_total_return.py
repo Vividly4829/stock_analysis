@@ -3,7 +3,7 @@ import pandas as pd
 import json
 
 
-def calculate_annualized_return_with_dividends(stock_ticker):
+def calculate_annualized_return_with_dividends(stock_ticker, start_year=None) -> dict:
 
     # Fetch historical data for the stock from the earliest available date
     stock = yf.Ticker(stock_ticker)
@@ -17,7 +17,13 @@ def calculate_annualized_return_with_dividends(stock_ticker):
 
     # Find the number of years between 01/01/inception year +1 and today
     today = pd.Timestamp.today()
-    years = today.year - inception_year
+
+    # if we have a start year, use that instead of the inception year
+    if start_year is None:  
+        years = today.year - inception_year
+    else:
+        years = today.year - start_year
+        
     max_drawdown = 0
     max_drawdown_date = None
     highest_price = None
