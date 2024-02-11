@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-def find_norwegian_mutual_fund_value(amount, fund_ticker):
 
+def find_norwegian_mutual_fund_value(amount, fund_ticker):
 
     url = f'https://e24.no/bors/instrument/{fund_ticker}'
 
@@ -23,11 +23,12 @@ def find_norwegian_mutual_fund_value(amount, fund_ticker):
             if description_tag is None:
                 return None
             # Extracting the content from the tag
-            
-            description_content = description_tag['content'] # type: ignore
+
+            description_content = description_tag['content']  # type: ignore
 
             # Using regex to extract the specific value
-            match = re.search(r'kurs er ([\d.]+),', description_content) # type: ignore
+            match = re.search(r'kurs er ([\d.]+),',
+                              description_content)  # type: ignore
             if match:
                 value = match.group(1)
                 # print(f"The extracted value is: {value}")
@@ -37,11 +38,7 @@ def find_norwegian_mutual_fund_value(amount, fund_ticker):
         else:
             print(
                 f"Failed to retrieve the webpage. Status code: {response.status_code}")
-        
-            
+
     except:
         print('Failed to retrieve the webpage.')
         return 0
-
-
-

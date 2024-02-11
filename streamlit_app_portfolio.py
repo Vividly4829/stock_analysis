@@ -19,9 +19,6 @@ if 'loaded_portfolio' in st.session_state:
     )
     st.session_state.selected_tab = selected_tab
 
-    print('gui', selected_tab)
-    print('session state tab', st.session_state.selected_tab)
-
     if selected_tab == "Portfolio visualisation":
         streamlit_portfolio_holdings()
     elif selected_tab == "Manage portfolio":

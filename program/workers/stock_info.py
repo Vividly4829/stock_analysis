@@ -4,97 +4,110 @@ import streamlit as st
 from datetime import datetime, timedelta
 import os
 import json
-from datetime import datetime, timedelta
 
 from program.workers.find_etf_holdings import find_etf_holdings
+from program.workers.find_fund_valuation import find_norwegian_mutual_fund_value
 
 
-class stock_info:
-    def __init__(self, ticker: str):
+class asset_info:
+    def __init__(self, ticker: str, type: str = 'stock'):
         self.ticker = ticker
+        self.type = type
+        self.stock_data = None
+        self.stock_info = None
+        self.holdings = None
 
-        self.stock_data, self.stock_info = self.download_stock_data()
-        self.holdings = self.load_etf_holdings()
+    def download_norwegian_mutual_fund_value(self):
+        if type == 'NORWEGIAN MUTUAL FUND':
 
-    def download_stock_data(self) -> tuple[pd.DataFrame, dict]:
+            # check if the directory exists and make it if not
+            if not os.path.exists(f'data/norwegian_mutual_fund_database/{self.ticker}'):
+                os.makedirs(
+                    f'data/norwegian_mutual_fund_database/{self.ticker}')
+                print(
+                    f'Directory {self.ticker} created. Downloading data for the first time!')
 
-        # check if the directory exists and make it if not, but use an if statement not a try
+                value = find_norwegian_mutual_fund_value(1, self.ticker)
+
+                # Write the value to a json file
+                with open(f'data/norwegian_mutual_fund_database/{self.ticker}/{self.ticker}_value.json', 'w') as f:
+                    json.dump(value, f)
+
+                return value
+
+            else:
+                current_time = datetime.now()
+                file_mod_time = datetime.fromtimestamp(os.path.getmtime(
+                    f'data/norwegian_mutual_fund_database/{self.ticker}/{self.ticker}_value.json'))
+
+                if (current_time - file_mod_time) > timedelta(days=1):
+                    print(
+                        f'Data for {self.ticker} is not up to date. Downloading new data.')
+                    value = find_norwegian_mutual_fund_value(1, self.ticker)
+                    with open(f'data/norwegian_mutual_fund_database/{self.ticker}/{self.ticker}_value.json', 'w') as f:
+                        json.dump(value, f)
+                    return value
+                else:
+                    with open(f'data/norwegian_mutual_fund_database/{self.ticker}/{self.ticker}_value.json', 'r') as r:
+                        value = json.load(r)
+                    return value
+
+    def download_stock_historical_data(self) -> pd.DataFrame:
+        # Check if the directory exists and make it if not
         if not os.path.exists(f'data/stock_database/{self.ticker}'):
-            print(
-                f'The directory {self.ticker} does not exist. We will create it and download the data for the first time!')
             os.makedirs(f'data/stock_database/{self.ticker}')
+            print(
+                f'Directory {self.ticker} created. Downloading historical data for the first time!')
+
             stock = yf.Ticker(self.ticker)
             hist = stock.history(period="max")
             hist.to_csv(
                 f'data/stock_database/{self.ticker}/{self.ticker}_historical_data.csv')
-
-            with open(f'data/stock_database/{self.ticker}/{self.ticker}_info.json', 'w') as f:
-                json.dump(stock.info, f)
-            return hist, stock.info
-
+            return hist
         else:
-            # If the data exists, we want to load or append rather then just download the data
-
             current_time = datetime.now()
             file_mod_time = datetime.fromtimestamp(os.path.getmtime(
                 f'data/stock_database/{self.ticker}/{self.ticker}_historical_data.csv'))
 
-            # Check if the file is no older than 1 month
-            if (current_time - file_mod_time) <= timedelta(days=1):
-
+            if (current_time - file_mod_time) > timedelta(days=14):
                 print(
-                    f'The data was already downloaded today for {self.ticker}! Skipping data download entirely.')
-
-                with open(f'data/stock_database/{self.ticker}/{self.ticker}_info.json', 'r') as r:
-                    stock_info = json.load(r)
-
-                hist_log = pd.read_csv(
-                    f'data/stock_database/{self.ticker}/{self.ticker}_historical_data.csv')
-
-                # Convert the date column to datetime
-                hist_log['Date'] = pd.to_datetime(hist_log['Date'])
-
-                # Set the date as the index
-                hist_log.set_index('Date', inplace=True)
-
-                return hist_log, stock_info
-
-            # Check if the file is no older than 1 month
-            elif (current_time - file_mod_time) <= timedelta(days=14):
-
-                print(
-                    f'The data was already downloaded in past 14 days {self.ticker}! Skipping historical data download and only getting info.')
-
+                    f'Data for {self.ticker} is not up to date. Downloading new data.')
                 stock = yf.Ticker(self.ticker)
-                stock_info = stock.info
-                # save stock info as json file
-                with open(f'data/stock_database/{self.ticker}/{self.ticker}_info.json', 'w') as f:
-                    json.dump(stock_info, f)
-
-                hist_log = pd.read_csv(
-                    f'data/stock_database/{self.ticker}/{self.ticker}_historical_data.csv')
-
-                # Convert the date column to datetime
-                hist_log['Date'] = pd.to_datetime(hist_log['Date'])
-
-                # Set the date as the index
-                hist_log.set_index('Date', inplace=True)
-
-                return hist_log, stock_info
-
-            else:  # If the data was older then one day, redownload info and append the data
-                print(
-                    f'The data existed from before but was not up to date for {self.ticker}! Downloading new data and appending to the old data.')
-                stock = yf.Ticker(self.ticker)
-                stock_info = stock.info
-                # save stock info as json file
-                with open(f'data/stock_database/{self.ticker}/{self.ticker}_info.json', 'w') as f:
-                    json.dump(stock_info, f)
-
                 hist = stock.history(period="max")
                 hist.to_csv(
                     f'data/stock_database/{self.ticker}/{self.ticker}_historical_data.csv')
-                return hist, stock_info
+
+            hist_log = pd.read_csv(
+                f'data/stock_database/{self.ticker}/{self.ticker}_historical_data.csv')
+            hist_log['Date'] = pd.to_datetime(hist_log['Date'])
+            hist_log.set_index('Date', inplace=True)
+            self.stock_data = hist_log
+            return hist_log
+
+    def download_stock_info(self) -> dict:
+        if not os.path.exists(f'data/stock_database/{self.ticker}'):
+            os.makedirs(f'data/stock_database/{self.ticker}', exist_ok=True)
+
+        stock = yf.Ticker(self.ticker)
+        if not os.path.exists(f'data/stock_database/{self.ticker}/{self.ticker}_info.json'):
+            with open(f'data/stock_database/{self.ticker}/{self.ticker}_info.json', 'w') as f:
+                json.dump(stock.info, f)
+        else:
+            current_time = datetime.now()
+            file_mod_time = datetime.fromtimestamp(os.path.getmtime(
+                f'data/stock_database/{self.ticker}/{self.ticker}_info.json'))
+            if (current_time - file_mod_time) > timedelta(days=1):
+                print(
+                    f'Info for {self.ticker} is not up to date. Downloading new info.')
+                with open(f'data/stock_database/{self.ticker}/{self.ticker}_info.json', 'w') as f:
+                    json.dump(stock.info, f)
+
+        with open(f'data/stock_database/{self.ticker}/{self.ticker}_info.json', 'r') as r:
+            stock_info = json.load(r)
+        self.stock_info = stock_info
+        return stock_info
+
+    # The rest of the class remains unchanged...
 
     def load_etf_holdings(self):
         if self.stock_info is not None and self.stock_info['quoteType'] == 'ETF':
@@ -125,14 +138,20 @@ class stock_info:
             os.makedirs(os.path.dirname(holdings_file_path), exist_ok=True)
             with open(holdings_file_path, 'w') as f:
                 json.dump(holdings, f)
+
+            self.holdings = holdings
             return holdings
 
     def find_previous_close_price(self):
-        if self.stock_data is None:
-            return None
-        return self.stock_info['previousClose']
+        if self.type == 'NORWEGIAN MUTUAL FUND':
+            return self.download_norwegian_mutual_fund_value()
+
+        else:
+            if self.stock_data is None and self:
+                self.download_stock_info()
+            return self.stock_info['previousClose']  # type: ignore
 
     def find_currency(self):
         if self.stock_info is None:
-            return None
-        return self.stock_info['currency']
+            self.download_stock_info()
+        return self.stock_info['currency']  # type: ignore

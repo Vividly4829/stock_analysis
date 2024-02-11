@@ -1,6 +1,6 @@
 import yfinance as yf
 import pandas as pd
-from program.workers.stock_info import stock_info
+from program.workers.stock_info import asset_info
 
 
 def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | None = None) -> tuple[dict, str | None]:
@@ -12,7 +12,8 @@ def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | N
         f'calculating annualised return for stock_ticker: {stock_ticker} and start_year: {start_year}')
 
     # Fetch historical data for the stock from the earliest available date
-    stock = stock_info(stock_ticker)
+    stock = asset_info(stock_ticker)
+    stock.download_stock_historical_data()
     stock_data = stock.stock_data
     # print(f'stock_data: {stock_data}')
     # Get inception date (first date in the data)
