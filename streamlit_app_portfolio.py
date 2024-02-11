@@ -38,6 +38,13 @@ if 'loaded_portfolio' in st.session_state:
         st.session_state.loaded_portfolio.user_portfolio['exchange rates'])
 else:
     st.sidebar.info('No portfolio loaded - load portfolio in side menu.')
+    selected_tab = st.sidebar.radio(
+        "Menu:",
+        ["Analyse asset performance",], index=0
+    )
+    if selected_tab == "Analyse asset performance":
+        analyse_asset_performance()
+
 
 st.sidebar.markdown('---')
 

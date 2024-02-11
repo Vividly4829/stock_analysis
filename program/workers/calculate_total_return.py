@@ -1,7 +1,6 @@
 import yfinance as yf
 import pandas as pd
-import json
-import streamlit as st
+from program.workers.stock_info import stock_info
 
 
 def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | None = None) -> tuple[dict, str | None]:
@@ -13,8 +12,8 @@ def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | N
         f'calculating annualised return for stock_ticker: {stock_ticker} and start_year: {start_year}')
 
     # Fetch historical data for the stock from the earliest available date
-    stock = yf.Ticker(stock_ticker)
-    stock_data = stock.history(period="max")  #
+    stock = stock_info(stock_ticker)
+    stock_data = stock.stock_data
     # print(f'stock_data: {stock_data}')
     # Get inception date (first date in the data)
     inception_date = stock_data.index[0]
@@ -32,9 +31,7 @@ def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | N
         years = today.year - inception_year
         start_year = inception_year
     else:
-        print(f'start_year: {start_year}')
-        print(f'inception_year: {inception_year}')
-        print(start_year <= inception_year)
+
         if int(start_year) <= inception_year:
             start_year = inception_year
             warning = f'Start year was before inception year. Using inception year {inception_year} instead.'
@@ -47,10 +44,14 @@ def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | N
     for year in range(0, years):
 
         selected_year = start_year + year
-        # print(f'selected_year: {selected_year} of stock {stock_ticker}')
+
         # Filter the dataframe to include rows where the date columns contains the given year
         # type: ignore
-        stock_data_for_year = stock_data[stock_data.index.year ==
+
+        # Convert the index to a datetime index
+        stock_data.index = pd.to_datetime(stock_data.index, utc=True)
+
+        stock_data_for_year = stock_data[stock_data.index.year ==  # type: ignore
                                          selected_year]
         # Initialize the number of shares and total investment value
         initial_investment = stock_data_for_year['Close'][0]

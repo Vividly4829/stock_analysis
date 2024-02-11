@@ -1,13 +1,10 @@
 import pandas as pd
-import yfinance as yf
-
 import traceback
 import streamlit as st
-import datetime
 
 from program.workers.find_fund_valuation import find_norwegian_mutual_fund_value
 from program.workers.currency_exchange_rate_scraper import get_exchange_rates
-# Create a currency converter object
+from program.workers.stock_info import stock_info
 
 
 def calculate_portfolio_value(df: pd.DataFrame, tickers=None):
@@ -47,16 +44,10 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers=None):
         else:
             try:
                 st.info(f'Fetching data for stock {ticker}...')
-                # print(f'Fetching data for stock {ticker}...')
-                stock = yf.Ticker(ticker)
-                # 'max' for all available data
-                hist = stock.history(period="max")
-                hist.to_csv(
-                    f'data/historical_stock_data/{ticker}_historical_data.csv')
-
-                current_price = stock.info['previousClose']
+                stock = stock_info(ticker)
+                current_price = stock.find_previous_close_price()
                 value = current_price * quantity
-                currency = stock.info['currency']
+                currency = stock.find_currency()  # type: ignore
                 # print(f'Found data for  {ticker}...' + str(value))
             except:
                 st.error(f'Failed to fetch data for stock {ticker}...')
