@@ -1,37 +1,16 @@
 {
     "holdings": [
         {
-            "Ticker": "EUNL.DE",
-            "Type": "ETF",
-            "Category": "WORLD",
-            "Quantity": 3330.0,
-            "Account": "nordnet",
-            "Currency": "EUR",
-            "Value (NOK)": 3061467,
-            "Value (EUR)": 272220,
-            "Value (USD)": 300096
-        },
-        {
             "Ticker": "IAUM",
             "Type": "ETF",
             "Category": "GOLD",
-            "Quantity": 8900.0,
+            "Quantity": 28630.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 1853111,
-            "Value (EUR)": 164775,
-            "Value (USD)": 181649
-        },
-        {
-            "Ticker": "SOXX",
-            "Type": "ETF",
-            "Category": "TECH",
-            "Quantity": 281.0,
-            "Account": "nordnet",
-            "Currency": "USD",
-            "Value (NOK)": 1628458,
-            "Value (EUR)": 144799,
-            "Value (USD)": 159627
+            "Value (NOK)": 7180565,
+            "Value (EUR)": 618796,
+            "Value (USD)": 673663,
+            "type": "ETF"
         },
         {
             "Ticker": "BOTZ",
@@ -40,31 +19,10 @@
             "Quantity": 3700.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 1075759,
-            "Value (EUR)": 95654,
-            "Value (USD)": 105450
-        },
-        {
-            "Ticker": "HERO",
-            "Type": "ETF",
-            "Category": "WORLD",
-            "Quantity": 4800.0,
-            "Account": "nordnet",
-            "Currency": "USD",
-            "Value (NOK)": 1008245,
-            "Value (EUR)": 89651,
-            "Value (USD)": 98832
-        },
-        {
-            "Ticker": "VEGI",
-            "Type": "ETF",
-            "Category": "FOOD",
-            "Quantity": 2470.0,
-            "Account": "nordnet",
-            "Currency": "USD",
-            "Value (NOK)": 947191,
-            "Value (EUR)": 84222,
-            "Value (USD)": 92847
+            "Value (NOK)": 1241908,
+            "Value (EUR)": 107023,
+            "Value (USD)": 116513,
+            "type": NaN
         },
         {
             "Ticker": "IBB",
@@ -73,64 +31,10 @@
             "Quantity": 507.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 677094,
-            "Value (EUR)": 60206,
-            "Value (USD)": 66371
-        },
-        {
-            "Ticker": "MILN",
-            "Type": "ETF",
-            "Category": "WORLD",
-            "Quantity": 1850.0,
-            "Account": "nordnet",
-            "Currency": "USD",
-            "Value (NOK)": 676596,
-            "Value (EUR)": 60161,
-            "Value (USD)": 66322
-        },
-        {
-            "Ticker": "VOO",
-            "Type": "ETF",
-            "Category": "WORLD",
-            "Quantity": 150.0,
-            "Account": "nordnet",
-            "Currency": "USD",
-            "Value (NOK)": 664553,
-            "Value (EUR)": 59091,
-            "Value (USD)": 65141
-        },
-        {
-            "Ticker": "IRBO",
-            "Type": "ETF",
-            "Category": "TECH",
-            "Quantity": 1700.0,
-            "Account": "nordnet",
-            "Currency": "USD",
-            "Value (NOK)": 595375,
-            "Value (EUR)": 52939,
-            "Value (USD)": 58361
-        },
-        {
-            "Ticker": "IDNA",
-            "Type": "ETF",
-            "Category": "BIO",
-            "Quantity": 2562.0,
-            "Account": "nordnet",
-            "Currency": "USD",
-            "Value (NOK)": 582844,
-            "Value (EUR)": 51825,
-            "Value (USD)": 57132
-        },
-        {
-            "Ticker": "LIT",
-            "Type": "ETF",
-            "Category": "COMMODITY",
-            "Quantity": 1150.0,
-            "Account": "nordnet",
-            "Currency": "USD",
-            "Value (NOK)": 581313,
-            "Value (EUR)": 51689,
-            "Value (USD)": 56982
+            "Value (NOK)": 732093,
+            "Value (EUR)": 63089,
+            "Value (USD)": 68683,
+            "type": NaN
         },
         {
             "Ticker": "AQWA",
@@ -139,20 +43,22 @@
             "Quantity": 3097.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 515304,
-            "Value (EUR)": 45820,
-            "Value (USD)": 50512
+            "Value (NOK)": 597496,
+            "Value (EUR)": 51490,
+            "Value (USD)": 56055,
+            "type": NaN
         },
         {
             "Ticker": "TSLA",
             "Type": "STOCK",
             "Category": "TECH",
-            "Quantity": 150.0,
+            "Quantity": 250.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 389446,
-            "Value (EUR)": 34628,
-            "Value (USD)": 38175
+            "Value (NOK)": 473125,
+            "Value (EUR)": 40772,
+            "Value (USD)": 44387,
+            "type": "ETF"
         },
         {
             "Ticker": "TMFC",
@@ -161,20 +67,22 @@
             "Quantity": 750.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 341894,
-            "Value (EUR)": 30400,
-            "Value (USD)": 33513
+            "Value (NOK)": 398832,
+            "Value (EUR)": 34369,
+            "Value (USD)": 37417,
+            "type": NaN
         },
         {
             "Ticker": "NOBL",
             "Type": "ETF",
-            "Category": "WORLD",
+            "Category": "SP500",
             "Quantity": 1129.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 1083807,
-            "Value (EUR)": 96370,
-            "Value (USD)": 106238
+            "Value (NOK)": 1198223,
+            "Value (EUR)": 103258,
+            "Value (USD)": 112414,
+            "type": NaN
         },
         {
             "Ticker": "BRK-B",
@@ -183,31 +91,34 @@
             "Quantity": 496.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 1802067,
-            "Value (EUR)": 160236,
-            "Value (USD)": 176645
+            "Value (NOK)": 2168877,
+            "Value (EUR)": 186906,
+            "Value (USD)": 203479,
+            "type": NaN
         },
         {
             "Ticker": "NVDA",
             "Type": "STOCK",
-            "Category": "TECH",
+            "Category": "SEMI_CONDUCTOR",
             "Quantity": 196.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 979562,
-            "Value (EUR)": 87101,
-            "Value (USD)": 96020
+            "Value (NOK)": 1908571,
+            "Value (EUR)": 164474,
+            "Value (USD)": 179057,
+            "type": NaN
         },
         {
             "Ticker": "TSLA",
-            "Type": "STOCK",
+            "Type": "ETF",
             "Category": "TECH",
-            "Quantity": 208.0,
+            "Quantity": 528.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 540032,
-            "Value (EUR)": 48018,
-            "Value (USD)": 52936
+            "Value (NOK)": 999240,
+            "Value (EUR)": 86111,
+            "Value (USD)": 93746,
+            "type": NaN
         },
         {
             "Ticker": "MSFT",
@@ -216,9 +127,10 @@
             "Quantity": 115.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 438231,
-            "Value (EUR)": 38966,
-            "Value (USD)": 42957
+            "Value (NOK)": 509692,
+            "Value (EUR)": 43923,
+            "Value (USD)": 47818,
+            "type": NaN
         },
         {
             "Ticker": "GOOG",
@@ -227,9 +139,10 @@
             "Quantity": 300.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 433976,
-            "Value (EUR)": 38588,
-            "Value (USD)": 42540
+            "Value (NOK)": 549779,
+            "Value (EUR)": 47378,
+            "Value (USD)": 51579,
+            "type": NaN
         },
         {
             "Ticker": "MCD",
@@ -238,9 +151,10 @@
             "Quantity": 130.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 386443,
-            "Value (EUR)": 34361,
-            "Value (USD)": 37880
+            "Value (NOK)": 375044,
+            "Value (EUR)": 32320,
+            "Value (USD)": 35185,
+            "type": NaN
         },
         {
             "Ticker": "EDMW.DE",
@@ -249,9 +163,10 @@
             "Quantity": 5000.0,
             "Account": "bolero",
             "Currency": "EUR",
-            "Value (NOK)": 397949,
-            "Value (EUR)": 35385,
-            "Value (USD)": 39008
+            "Value (NOK)": 457201,
+            "Value (EUR)": 39400,
+            "Value (USD)": 42893,
+            "type": NaN
         },
         {
             "Ticker": "DIS",
@@ -260,20 +175,22 @@
             "Quantity": 350.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 328563,
-            "Value (EUR)": 29215,
-            "Value (USD)": 32207
+            "Value (NOK)": 393022,
+            "Value (EUR)": 33869,
+            "Value (USD)": 36872,
+            "type": NaN
         },
         {
             "Ticker": "CASH",
             "Type": "CASH",
             "Category": "CASH",
-            "Quantity": 1594.0,
+            "Quantity": 3675.0,
             "Account": "bolero",
-            "Currency": "EUR",
-            "Value (NOK)": 17926,
-            "Value (EUR)": 1594,
-            "Value (USD)": 1757
+            "Currency": "NOK",
+            "Value (NOK)": 3675,
+            "Value (EUR)": 316,
+            "Value (USD)": 344,
+            "type": NaN
         },
         {
             "Ticker": "GOOGL",
@@ -282,9 +199,10 @@
             "Quantity": 160.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 229201,
-            "Value (EUR)": 20380,
-            "Value (USD)": 22467
+            "Value (NOK)": 290503,
+            "Value (EUR)": 25034,
+            "Value (USD)": 27254,
+            "type": NaN
         },
         {
             "Ticker": "ABBNY",
@@ -293,9 +211,10 @@
             "Quantity": 480.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 213205,
-            "Value (EUR)": 18957,
-            "Value (USD)": 20899
+            "Value (NOK)": 269424,
+            "Value (EUR)": 23218,
+            "Value (USD)": 25276,
+            "type": NaN
         },
         {
             "Ticker": "NFLX",
@@ -304,9 +223,10 @@
             "Quantity": 40.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 200608,
-            "Value (EUR)": 17837,
-            "Value (USD)": 19664
+            "Value (NOK)": 261639,
+            "Value (EUR)": 22547,
+            "Value (USD)": 24546,
+            "type": NaN
         },
         {
             "Ticker": "CRSP",
@@ -315,9 +235,10 @@
             "Quantity": 210.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 129825,
-            "Value (EUR)": 11543,
-            "Value (USD)": 12726
+            "Value (NOK)": 124700,
+            "Value (EUR)": 10746,
+            "Value (USD)": 11699,
+            "type": NaN
         },
         {
             "Ticker": "MTCH",
@@ -326,9 +247,10 @@
             "Quantity": 100.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 35848,
-            "Value (EUR)": 3187,
-            "Value (USD)": 3514
+            "Value (NOK)": 34044,
+            "Value (EUR)": 2933,
+            "Value (USD)": 3194,
+            "type": NaN
         },
         {
             "Ticker": "PATH",
@@ -337,9 +259,10 @@
             "Quantity": 100.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 25759,
-            "Value (EUR)": 2290,
-            "Value (USD)": 2525
+            "Value (NOK)": 21531,
+            "Value (EUR)": 1855,
+            "Value (USD)": 2020,
+            "type": NaN
         },
         {
             "Ticker": "ACLLY",
@@ -348,20 +271,22 @@
             "Quantity": 24.0,
             "Account": "bolero",
             "Currency": "USD",
-            "Value (NOK)": 7296,
-            "Value (EUR)": 648,
-            "Value (USD)": 715
+            "Value (NOK)": 10352,
+            "Value (EUR)": 892,
+            "Value (USD)": 971,
+            "type": NaN
         },
         {
             "Ticker": "CASH",
             "Type": "CASH",
             "Category": "CASH",
-            "Quantity": 97036.0,
+            "Quantity": 80477.0,
             "Account": "KBC",
             "Currency": "EUR",
-            "Value (NOK)": 1091292,
-            "Value (EUR)": 97036,
-            "Value (USD)": 106972
+            "Value (NOK)": 933862,
+            "Value (EUR)": 80477,
+            "Value (USD)": 87612,
+            "type": NaN
         },
         {
             "Ticker": "IAU",
@@ -370,9 +295,10 @@
             "Quantity": 1500.0,
             "Account": "DNB LIV",
             "Currency": "USD",
-            "Value (NOK)": 591897,
-            "Value (EUR)": 52630,
-            "Value (USD)": 58020
+            "Value (NOK)": 712605,
+            "Value (EUR)": 61409,
+            "Value (USD)": 66855,
+            "type": NaN
         },
         {
             "Ticker": "IAU",
@@ -381,20 +307,22 @@
             "Quantity": 10497.0,
             "Account": "DNB - VPS",
             "Currency": "USD",
-            "Value (NOK)": 4142096,
-            "Value (EUR)": 368308,
-            "Value (USD)": 406023
+            "Value (NOK)": 4986814,
+            "Value (EUR)": 429746,
+            "Value (USD)": 467851,
+            "type": NaN
         },
         {
             "Ticker": "CASH",
             "Type": "CASH",
             "Category": "CASH",
-            "Quantity": 17697.0,
+            "Quantity": 28938.0,
             "Account": "DNB - VPS",
             "Currency": "NOK",
-            "Value (NOK)": 17697,
-            "Value (EUR)": 1573,
-            "Value (USD)": 1734
+            "Value (NOK)": 28938,
+            "Value (EUR)": 2493,
+            "Value (USD)": 2714,
+            "type": NaN
         },
         {
             "Ticker": "GLD",
@@ -403,9 +331,10 @@
             "Quantity": 345.0,
             "Account": "DNB - VPS",
             "Currency": "USD",
-            "Value (NOK)": 666709,
-            "Value (EUR)": 59282,
-            "Value (USD)": 65353
+            "Value (NOK)": 801992,
+            "Value (EUR)": 69112,
+            "Value (USD)": 75241,
+            "type": NaN
         },
         {
             "Ticker": "VEGI",
@@ -414,9 +343,10 @@
             "Quantity": 1200.0,
             "Account": "DNB - VPS",
             "Currency": "USD",
-            "Value (NOK)": 460174,
-            "Value (EUR)": 40917,
-            "Value (USD)": 45108
+            "Value (NOK)": 488735,
+            "Value (EUR)": 42117,
+            "Value (USD)": 45852,
+            "type": NaN
         },
         {
             "Ticker": "MOO",
@@ -425,20 +355,10 @@
             "Quantity": 350.0,
             "Account": "DNB - VPS",
             "Currency": "USD",
-            "Value (NOK)": 268113,
-            "Value (EUR)": 23840,
-            "Value (USD)": 26281
-        },
-        {
-            "Ticker": "LIT",
-            "Type": "ETF",
-            "Category": "COMMODITY",
-            "Quantity": 500.0,
-            "Account": "DNB - VPS",
-            "Currency": "USD",
-            "Value (NOK)": 252744,
-            "Value (EUR)": 22473,
-            "Value (USD)": 24775
+            "Value (NOK)": 278604,
+            "Value (EUR)": 24009,
+            "Value (USD)": 26138,
+            "type": NaN
         },
         {
             "Ticker": "SLV",
@@ -447,9 +367,10 @@
             "Quantity": 850.0,
             "Account": "DNB - VPS",
             "Currency": "USD",
-            "Value (NOK)": 193458,
-            "Value (EUR)": 17201,
-            "Value (USD)": 18963
+            "Value (NOK)": 236741,
+            "Value (EUR)": 20401,
+            "Value (USD)": 22210,
+            "type": NaN
         },
         {
             "Ticker": "CMG",
@@ -458,9 +379,10 @@
             "Quantity": 8.0,
             "Account": "DNB - VPS",
             "Currency": "USD",
-            "Value (NOK)": 188289,
-            "Value (EUR)": 16742,
-            "Value (USD)": 18456
+            "Value (NOK)": 270880,
+            "Value (EUR)": 23343,
+            "Value (USD)": 25413,
+            "type": NaN
         },
         {
             "Ticker": "ARKK",
@@ -469,20 +391,22 @@
             "Quantity": 240.0,
             "Account": "DNB - VPS",
             "Currency": "USD",
-            "Value (NOK)": 128075,
-            "Value (EUR)": 11388,
-            "Value (USD)": 12554
+            "Value (NOK)": 115423,
+            "Value (EUR)": 9946,
+            "Value (USD)": 10828,
+            "type": NaN
         },
         {
             "Ticker": "QQQ",
             "Type": "ETF",
             "Category": "TECH",
-            "Quantity": 821.0,
+            "Quantity": 371.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 3415285,
-            "Value (EUR)": 303681,
-            "Value (USD)": 334779
+            "Value (NOK)": 1763420,
+            "Value (EUR)": 151965,
+            "Value (USD)": 165440,
+            "type": NaN
         },
         {
             "Ticker": "BRK-B",
@@ -491,75 +415,58 @@
             "Quantity": 270.0,
             "Account": "nordnet",
             "Currency": "USD",
-            "Value (NOK)": 980964,
-            "Value (EUR)": 87225,
-            "Value (USD)": 96157
+            "Value (NOK)": 1180639,
+            "Value (EUR)": 101743,
+            "Value (USD)": 110764,
+            "type": NaN
         },
         {
             "Ticker": "CASH-SAVINGS",
-            "Type": "ST SAVINGS ACCOUNT",
+            "Type": "CASH",
             "Category": "CASH",
-            "Quantity": 223774.0,
+            "Quantity": 4861139.0,
             "Account": "nordnet",
             "Currency": "NOK",
-            "Value (NOK)": 223774,
-            "Value (EUR)": 19897,
-            "Value (USD)": 21935
+            "Value (NOK)": 4861139,
+            "Value (EUR)": 418916,
+            "Value (USD)": 456060,
+            "type": NaN
         },
         {
             "Ticker": "CASH-IKZ",
             "Type": "CASH",
             "Category": "CASH",
-            "Quantity": 86547.0,
+            "Quantity": 2276272.0,
             "Account": "nordnet",
             "Currency": "NOK",
-            "Value (NOK)": 86547,
-            "Value (EUR)": 7695,
-            "Value (USD)": 8483
-        },
-        {
-            "Ticker": "FAST 3MND",
-            "Type": "LT SAVINGS ACCOUNT",
-            "Category": "CASH",
-            "Quantity": 1500000.0,
-            "Account": "DNB  SAVING LT",
-            "Currency": "NOK",
-            "Value (NOK)": 1500000,
-            "Value (EUR)": 133377,
-            "Value (USD)": 147035
-        },
-        {
-            "Ticker": "FAST 3MND",
-            "Type": "LT SAVINGS ACCOUNT",
-            "Category": "CASH",
-            "Quantity": 1000000.0,
-            "Account": "DNB  SAVING LT",
-            "Currency": "NOK",
-            "Value (NOK)": 1000000,
-            "Value (EUR)": 88918,
-            "Value (USD)": 98023
+            "Value (NOK)": 2276272,
+            "Value (EUR)": 196161,
+            "Value (USD)": 213554,
+            "type": "ETF"
         },
         {
             "Ticker": "FAST 6MND",
             "Type": "LT SAVINGS ACCOUNT",
             "Category": "CASH",
-            "Quantity": 1000000.0,
+            "Quantity": 1022160.0,
             "Account": "DNB  SAVING LT",
             "Currency": "NOK",
-            "Value (NOK)": 1000000,
-            "Value (EUR)": 88918,
-            "Value (USD)": 98023
+            "Value (NOK)": 1022160,
+            "Value (EUR)": 88086,
+            "Value (USD)": 95896,
+            "type": NaN
         },
         {
             "Ticker": "SPAREKONTOPLUSS",
-            "Type": "ST SAVINGS ACCOUNT",
+            "Type": "CASH",
             "Category": "CASH",
-            "Quantity": 2599998.0,
+            "Quantity": 1500000.0,
             "Account": "DNB  SAVING LT",
             "Currency": "NOK",
-            "Value (NOK)": 2599998,
-            "Value (EUR)": 231187,
-            "Value (USD)": 254861
+            "Value (NOK)": 1500000,
+            "Value (EUR)": 129264,
+            "Value (USD)": 140726,
+            "type": NaN
         },
         {
             "Ticker": "DK-S5-70.OSE!DNB PREMIUM 80",
@@ -568,9 +475,10 @@
             "Quantity": 3307.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 1105847,
-            "Value (EUR)": 98330,
-            "Value (USD)": 108399
+            "Value (NOK)": 1243003,
+            "Value (EUR)": 107117,
+            "Value (USD)": 116615,
+            "type": NaN
         },
         {
             "Ticker": "VI-DNBGN.OSE!DNB GRONT NORDEN",
@@ -579,9 +487,10 @@
             "Quantity": 298.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 753823,
-            "Value (EUR)": 67028,
-            "Value (USD)": 73892
+            "Value (NOK)": 871304,
+            "Value (EUR)": 75086,
+            "Value (USD)": 81743,
+            "type": NaN
         },
         {
             "Ticker": "SP-SBINN.OSE!STOREBRAND INDEX NORGE",
@@ -590,9 +499,10 @@
             "Quantity": 690.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 1031584,
-            "Value (EUR)": 91726,
-            "Value (USD)": 101119
+            "Value (NOK)": 1129658,
+            "Value (EUR)": 97350,
+            "Value (USD)": 105981,
+            "type": NaN
         },
         {
             "Ticker": "DI-BARNE.OSE!DNB BARNEFOND A",
@@ -601,9 +511,10 @@
             "Quantity": 91.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 78351,
-            "Value (EUR)": 6966,
-            "Value (USD)": 7680
+            "Value (NOK)": 89349,
+            "Value (EUR)": 7699,
+            "Value (USD)": 8382,
+            "type": NaN
         },
         {
             "Ticker": "DK-GLBIX.OSE!DNB GLOBAL A",
@@ -612,9 +523,10 @@
             "Quantity": 44.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 25501,
-            "Value (EUR)": 2267,
-            "Value (USD)": 2499
+            "Value (NOK)": 29531,
+            "Value (EUR)": 2544,
+            "Value (USD)": 2770,
+            "type": NaN
         },
         {
             "Ticker": "DK-NORIX.OSE!DNB INDEX NORGE",
@@ -623,9 +535,10 @@
             "Quantity": 84.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 30373,
-            "Value (EUR)": 2700,
-            "Value (USD)": 2977
+            "Value (NOK)": 33263,
+            "Value (EUR)": 2866,
+            "Value (USD)": 3120,
+            "type": NaN
         },
         {
             "Ticker": "DI-NOTEC.OSE!DNB TEKNOLOGI A",
@@ -634,9 +547,10 @@
             "Quantity": 18.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 67501,
-            "Value (EUR)": 6002,
-            "Value (USD)": 6616
+            "Value (NOK)": 81012,
+            "Value (EUR)": 6981,
+            "Value (USD)": 7600,
+            "type": NaN
         },
         {
             "Ticker": "HF-NOSEL.OSE!HANDELSBANKEN NORDEN SELEKTIV",
@@ -645,9 +559,10 @@
             "Quantity": 219.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 147319,
-            "Value (EUR)": 13099,
-            "Value (USD)": 14440
+            "Value (NOK)": 160016,
+            "Value (EUR)": 13789,
+            "Value (USD)": 15012,
+            "type": NaN
         },
         {
             "Ticker": "VI-DBNMI.OSE!DNB MILJOINVEST A",
@@ -656,9 +571,10 @@
             "Quantity": 221.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 350960,
-            "Value (EUR)": 31206,
-            "Value (USD)": 34402
+            "Value (NOK)": 360358,
+            "Value (EUR)": 31054,
+            "Value (USD)": 33807,
+            "type": NaN
         },
         {
             "Ticker": "HL-NYENG.OSE!HANDELSBANKEN BAEREKRAFTIG ENERGI",
@@ -667,9 +583,34 @@
             "Quantity": 745.0,
             "Account": "DNB ASK",
             "Currency": "NOK",
-            "Value (NOK)": 245522,
-            "Value (EUR)": 21831,
-            "Value (USD)": 24067
+            "Value (NOK)": 236656,
+            "Value (EUR)": 20394,
+            "Value (USD)": 22202,
+            "type": NaN
+        },
+        {
+            "Ticker": "SMH",
+            "Type": "ETF",
+            "Category": "SEMI_CONDUCTOR",
+            "Quantity": 1000.0,
+            "Account": "nordnet",
+            "Currency": "USD",
+            "Value (NOK)": 2420439,
+            "Value (EUR)": 208585,
+            "Value (USD)": 227080,
+            "type": NaN
+        },
+        {
+            "Ticker": "KROP",
+            "Type": "ETF",
+            "Category": "FOOD",
+            "Quantity": 15173.0,
+            "Account": "nordnet",
+            "Currency": "USD",
+            "Value (NOK)": 1820190,
+            "Value (EUR)": 156857,
+            "Value (USD)": 170766,
+            "type": NaN
         }
     ],
     "accounts": [
@@ -682,13 +623,15 @@
         "DNB ASK"
     ],
     "categories": [
-        "WORLD",
         "GOLD",
         "TECH",
-        "FOOD",
         "BIO",
         "COMMODITY",
         "ACTIVE MANAGEMENT",
+        "SP500",
+        "SEMI_CONDUCTOR",
+        "FOOD",
+        "WORLD",
         "CASH"
     ],
     "types": [
@@ -699,13 +642,13 @@
         "LT SAVINGS ACCOUNT"
     ],
     "total value": {
-        "NOK": 44492841,
-        "EUR": 3956199,
-        "USD": 4361334
+        "NOK": 50132539,
+        "EUR": 4320229,
+        "USD": 4703297
     },
     "exchange rates": {
-        "EUR NOK": 11.246264081621847,
-        "USD EUR": 0.9071106839,
-        "USD NOK": 10.2016063024
+        "EUR NOK": 11.60408871841725,
+        "USD EUR": 0.9185532083,
+        "USD NOK": 10.6589729217
     }
 }

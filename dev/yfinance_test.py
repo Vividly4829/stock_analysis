@@ -1,5 +1,5 @@
 import yfinance as yf
 
-stock = yf.Ticker('EUNL.DE')
-current_price = stock.info['previousClose']
+stock = yf.Ticker('TSLA')
+current_price = stock.financials
 print(current_price)

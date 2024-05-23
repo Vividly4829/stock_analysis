@@ -29,7 +29,7 @@ def find_etf_holdings(ticker: str):
                 holdings = {}
 
                 # Extract data from each row of the table
-                for row in table.find_all('tr')[1:]:  # Skip the header row
+                for row in table.find_all('tr')[1:]:  # type: ignore
                     cells = row.find_all('td')
                     if len(cells) >= 4:  # Ensure there are enough cells
                         # Extract the ticker symbol

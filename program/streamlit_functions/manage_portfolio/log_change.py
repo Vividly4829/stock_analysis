@@ -1,6 +1,6 @@
 import streamlit as st
 import time
-from program.workers.jsonbase import JsonBaseUserPortfolio
+from program.workers.portfolio_database import JsonBaseUserPortfolio
 
 
 def log_portfolio_change(df):

@@ -1,8 +1,8 @@
-from program.workers.jsonbase import *
+from program.workers.portfolio_database import *
 from program.streamlit_functions.etf_performance.compare_asset_performance import analyse_asset_performance
 from program.streamlit_functions.portfolio_holdings.streamlit_portfolio_holdings import streamlit_portfolio_holdings
 from program.streamlit_functions.manage_portfolio.streamlit_manage_portfolio import streamlit_manage_portfolio
-from program.workers.jsonbase import JsonBaseUserPortfolio
+from program.workers.portfolio_database import JsonBaseUserPortfolio
 import streamlit as st
 
 import time

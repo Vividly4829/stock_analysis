@@ -1,6 +1,6 @@
 import yfinance as yf
 import pandas as pd
-from program.workers.stock_info import asset_info
+from program.workers.asset_info import asset_info
 
 
 def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | None = None) -> tuple[dict, str | None]:
@@ -15,9 +15,12 @@ def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | N
     stock = asset_info(stock_ticker)
     stock.download_stock_historical_data()
     stock_data = stock.stock_data
+    stock.download_earnings()
+    earnings = stock.earnings
+    print(f'earnings: {earnings}')
     # print(f'stock_data: {stock_data}')
     # Get inception date (first date in the data)
-    inception_date = stock_data.index[0]
+    inception_date = stock_data.index[0]  # type: ignore
 
     # Get the year of the inception date
     inception_year: int = int(inception_date.year)
@@ -50,7 +53,8 @@ def calculate_annualized_return_with_dividends(stock_ticker, start_year: int | N
         # type: ignore
 
         # Convert the index to a datetime index
-        stock_data.index = pd.to_datetime(stock_data.index, utc=True)
+        stock_data.index = pd.to_datetime(  # type: ignore
+            stock_data.index, utc=True)  # type: ignore
 
         stock_data_for_year = stock_data[stock_data.index.year ==  # type: ignore
                                          selected_year]
