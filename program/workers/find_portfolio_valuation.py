@@ -25,7 +25,7 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers=None):
         type = row['Type']
 
         ticker = ticker.strip()  # Remove leading/trailing whitespaces
-        if category == 'CASH':
+        if category == 'CASH' or category == 'REAL ESTATE':
             value = quantity
 
         elif 'FUND' in type:
