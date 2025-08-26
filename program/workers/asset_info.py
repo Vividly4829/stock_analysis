@@ -137,7 +137,7 @@ class asset_info:
             current_time = datetime.now()
             file_mod_time = datetime.fromtimestamp(os.path.getmtime(
                 f'data/stock_database/{self.ticker}/{self.ticker}_info.json'))
-            if (current_time - file_mod_time) > timedelta(days=1):
+            if (current_time - file_mod_time) > timedelta(days=0.0000000000000001): # I needede a new dowmload 
                 print(
                     f'Info for {self.ticker} is not up to date. Downloading new info.')
                 with open(f'data/stock_database/{self.ticker}/{self.ticker}_info.json', 'w') as f:
@@ -194,3 +194,4 @@ class asset_info:
         if self.stock_info is None:
             self.download_stock_info()
         return self.stock_info['currency']  # type: ignore
+

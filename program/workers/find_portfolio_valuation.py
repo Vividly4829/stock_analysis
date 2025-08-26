@@ -48,7 +48,7 @@ def calculate_portfolio_value(df: pd.DataFrame, tickers=None):
                 current_price = stock.find_previous_close_price()
                 value = current_price * quantity
                 currency = stock.find_currency()  # type: ignore
-                # print(f'Found data for  {ticker}...' + str(value))
+                print(f'Found data for  {ticker}...' + str(value))
             except:
                 st.error(f'Failed to fetch data for stock {ticker}...')
                 tb = traceback.format_exc()
